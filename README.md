@@ -8,6 +8,12 @@ Gilberto de Paiva Rodrigues
 Diagrama de classes:
 https://app.diagrams.net/#G1vhq0o9B52dkYAM5V6SN-4IUuvqF0ho83
 
+Tads utilizadas:
+Utilizaremos as tads Lista Duplamente Encadeada e Conjunto no sistema. A lista duplamente enceada
+será usada para relacionar os tweets com comentários entre si, podendo haver threads. O conjunto será usada
+para armazenar os tweets postados por um usuário, e os tweets que estão no feed daquele usuário para serem
+visualizados.
+
 Estrutura do projeto:
 - ``src`` - Os arquivos .cpp devem ser armazenados neste diretório.
 - ``include`` - Os arquivos .h devem ser armazenados neste diretório.
