@@ -1,4 +1,4 @@
-#include "../Include/helper.h"
+#include "../include/helper.h"
 
 template<typename T>
 int buscaBinRec(T chave, T vet[], int inicio, int fim) {

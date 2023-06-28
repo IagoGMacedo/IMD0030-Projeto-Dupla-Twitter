@@ -19,4 +19,9 @@ template<typename T>
 int buscaBinIte(T chave, T vet[], int tamanho);
 
 
+//TADs
+//Conjunto
+
+//ListaDuplamenteEncadeada
+
 #endif

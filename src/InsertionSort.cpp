@@ -1,4 +1,4 @@
-#include "../Include/helper.h"
+#include "../include/helper.h"
 
 template<typename T>
 void insertionSort(T vet[], int tamanho) {
