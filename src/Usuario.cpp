@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "../include/Usuario.h"
 #include "../include/helper.h"
 #include <string>
@@ -112,3 +113,12 @@ void Usuario::bloquearUsuario( Usuario user ){
 }
 
 
+=======
+#include "../include/Usuario.h"
+#include "../include/Conjunto.h"
+
+
+Usuario::Usuario(){
+
+}
+>>>>>>> 93353da73c7a50d2e9c35f177ee4d9c967bdb0b8

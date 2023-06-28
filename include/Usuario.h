@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "../include/helper.h"
 using namespace std;
 
@@ -64,3 +65,31 @@ public:
 
 
 };
+=======
+#ifndef USUARIO_H
+#define USUARIO_H
+
+#include "../include/Conjunto.h"
+#include "../include/Tweet.h"
+#include <iostream>
+
+class Usuario{
+    private:
+        std::string nomeUsuario;
+        std::string senhaUsuario;
+        int qntdSeguidores; 
+        int qntdSeguindo; 
+        Conjunto<Tweet> listaTweets;
+        Conjunto<Usuario> ListaUsuariosSeguindo;
+        Conjunto<Usuario> ListaUsuariosSeguidores;
+        std::string emailUsuario; 
+    public:
+        Usuario();
+        ~Usuario();
+        void deletarUsuario(); 
+        void seguirUsuario(Usuario user); 
+        void bloquearUsuario(Usuario user); 
+};
+
+#endif
+>>>>>>> 93353da73c7a50d2e9c35f177ee4d9c967bdb0b8
