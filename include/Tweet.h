@@ -1,9 +1,10 @@
 #ifndef TWEET_H
-#define FEED_H
+#define TWEET_H
 
-#include "iostream"
-#include <Usuario.h>
-#include <ListaEncad.h>
+#include "../include/Usuario.h"
+#include "../include/ListaEncad.h"
+#include <iostream>
+
 
 class Tweet{
     private:

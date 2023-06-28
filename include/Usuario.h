@@ -1,7 +1,9 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include <Conjunto.h>
+#include "../include/Conjunto.h"
+#include "../include/Tweet.h"
+#include <iostream>
 
 class Usuario{
     private:
@@ -14,6 +16,8 @@ class Usuario{
         Conjunto<Usuario> ListaUsuariosSeguidores;
         std::string emailUsuario; 
     public:
+        Usuario();
+        ~Usuario();
         void deletarUsuario(); 
         void seguirUsuario(Usuario user); 
         void bloquearUsuario(Usuario user); 

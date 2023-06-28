@@ -1,7 +1,7 @@
 #ifndef LISTAENCAD_H
 #define LISTAENCAD_H
 
-#include <No.h>
+#include "../include/No.h"
 
 template <typename T>
 class ListaEncad{

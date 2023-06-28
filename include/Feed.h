@@ -1,16 +1,19 @@
 #ifndef FEED_H
 #define FEED_H
 
-#include <Conjunto.h>
-#include <Tweet.h>
-#include <Usuario.h>
-
-
+#include "../include/Conjunto.h"
+#include "../include/Tweet.h"
+#include "../include/Usuario.h"
 class Feed{
+     public:
+        Feed();
+        ~Feed();
+        void popularFeed(Usuario user);
     private:
         Conjunto<Tweet> listaTweets;
         Conjunto<Usuario> listaUsuario;
-    public:
-        void popularFeed(Usuario user);
+   
+
+        
 };
 #endif

@@ -1,4 +1,4 @@
-#include "../Include/helper.h"
+#include "../include/Helper.h"
 
 template<typename T>
 int buscaBinIte(T chave, T vet[], int esquerda, int direita) {

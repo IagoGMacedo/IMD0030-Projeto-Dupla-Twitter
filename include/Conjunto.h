@@ -1,6 +1,10 @@
 #ifndef CONJUNTO_H
 #define CONJUNTO_H
 
+#include "../include/Usuario.h"
+#include "../include/Tweet.h"
+
+
 template <typename T>
 class Conjunto{
         public:
@@ -17,5 +21,9 @@ class Conjunto{
         int capacidade;
         int quantidade;
 };
+//metodos vão ser aqui mesmo, nao tem cpp
+template<typename T>
+Conjunto<T>::Conjunto(void){
 
+};
 #endif

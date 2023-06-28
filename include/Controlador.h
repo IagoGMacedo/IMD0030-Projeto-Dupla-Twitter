@@ -1,8 +1,8 @@
 #ifndef CONTROLADOR_H
 #define CONTROLADOR_H
 
-#include <Usuario.h>
-#include <Feed.h>
+#include "../include/Usuario.h"
+#include "../include/Feed.h"
 
 class Controlador{
     private:
@@ -11,5 +11,8 @@ class Controlador{
     public:
         void fazerLogin(std::string nomeUsuario, std::string senhaUsuario);
         void encerrarSessao();
+        void iniciarPrograma();
+        Controlador();
+        ~Controlador();
 };
 #endif

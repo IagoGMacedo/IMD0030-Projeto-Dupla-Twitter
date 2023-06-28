@@ -13,6 +13,7 @@ public:
     No();
     No( T );
     No( T, No*, No* );
+    ~No();
     T getValor();
     void setValor(T val);
     No* getProximo();
