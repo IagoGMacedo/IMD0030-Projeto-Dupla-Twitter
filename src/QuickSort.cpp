@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#include "../include/helper.h"
-=======
 #include "../include/Helper.h"
->>>>>>> 93353da73c7a50d2e9c35f177ee4d9c967bdb0b8
 
 template<typename T>
 void trocar(T *a, T *b) {

@@ -1,95 +1,59 @@
-<<<<<<< HEAD
-#include "../include/helper.h"
+#ifndef USUARIO_H
+#define USUARIO_H
+
+#include "../include/Helper.h"
+#include "../include/ListaEncad.h"
+#include "../include/Conjunto.h"
+#include <iostream>
 using namespace std;
 
 class Usuario {
 private:
-    string nomePerfil;
-    
-    //Conjunto<Tweet> listaTweets[];
-    
+    std::string nomePerfil;
+    Conjunto<Tweet> listaTweets;
     int qntdSeguidores;
     int qntdSeguindo;
-    
-    //Conjunto<Tweet> listaSeguindo;
-    //Conjunto<Tweet> listaSeguidores;
-    //Conjunto<Usuarios> listaBloqueados;
-    
-    string email;
-    string nomeUsuario;
+    Conjunto<Usuario> listaSeguindo;
+    Conjunto<Usuario> listaSeguidores;
+    Conjunto<Usuario> listaBloqueados;
+    std::string email;
+    std::string nomeUsuario;
 
 public:
     //Construtores e destrutor
-    Usuario(string nomePerfil, /*Conjunto<Tweet> listaTweets[],*/ int qntdSeguidores, int qntdSeguindo, 
-            /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados, */ 
-            string email, string nomeUsuario);
+    Usuario(std::string nomePerfil, Conjunto<Tweet> listaTweets, int qntdSeguidores, int qntdSeguindo, Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados, std::string email, std::string nomeUsuario);
+    Usuario(std::string nomePerfil, std::string email, std::string nomeUsuario);
     Usuario();
     ~Usuario();
 
     //Getters
-    void setNomePerfil(string nomePerfil);
-    
-    //void setlistaTweets(Conjunto<Tweet> listaTweets);
-    
-    void setQntdSeguidores(int qntdSeguidores);
-    void setQntdSeguindo(int qntdSeguindo);
-
-    //void setlistaSeguindo(Conjunto<Usuarios> listaSeguindo);
-    //void setlistaSeguidores(Conjunto<Usuarios> listaSeguidos);
-    //void setlistaBloqueados(Conjunto<Usuarios> listaBloqueados);
-
-    void setEmail(string email);
-    void setNomeUsuario(string nomeUsuario);
-    
-
-    //setters
-    string getNomePerfil();
-    
-    //Conjunto<Tweet> getlistaTweets();
-    
+    std::string getNomePerfil();
+    Conjunto<Tweet> getListaTweets();
     int getQntdSeguidores();
     int getQntdSeguindo();
+    Conjunto<Usuario> getListaSeguindo();
+    Conjunto<Usuario> getListaSeguidores();
+    Conjunto<Usuario> getListaBloqueados();
+    std::string getEmail();
+    std::string getNomeUsuario();
 
-    //Conjunto<Usuarios> getlistaSeguindo();
-    //Conjunto<Usuarios> getlistaSeguidores();
-    //Conjunto<Usuarios> getlistaBloqueados();
-
-    string getEmail();
-    string getNomeUsuario();
-    
+    //Setters
+    void setNomePerfil(std::string nomePerfil);
+    void setListaTweets(Conjunto<Tweet> listaTweets);
+    void setQntdSeguidores(int qntdSeguidores);
+    void setQntdSeguindo(int qntdSeguindo);
+    void setListaSeguindo(Conjunto<Usuario> listaSeguindo);
+    void setListaSeguidores(Conjunto<Usuario> listaSeguidos);
+    void setListaBloqueados(Conjunto<Usuario> listaBloqueados);
+    void setEmail(std::string email);
+    void setNomeUsuario(std::string nomeUsuario);
 
     //Outros Metodos
-    void deletarUsuario( string confirmacao );
-    void seguirUsuario( Usuario user );
-    void bloquearUsuario( Usuario user );
+    void deletarUsuario(std::string confirmacao);
+    void seguirUsuario(Usuario user, Usuario ownner);
+    void deixarDeSeguir(Usuario user, Usuario ownner);
+    void bloquearUsuario(Usuario user);
 
-
-};
-=======
-#ifndef USUARIO_H
-#define USUARIO_H
-
-#include "../include/Conjunto.h"
-#include "../include/Tweet.h"
-#include <iostream>
-
-class Usuario{
-    private:
-        std::string nomeUsuario;
-        std::string senhaUsuario;
-        int qntdSeguidores; 
-        int qntdSeguindo; 
-        Conjunto<Tweet> listaTweets;
-        Conjunto<Usuario> ListaUsuariosSeguindo;
-        Conjunto<Usuario> ListaUsuariosSeguidores;
-        std::string emailUsuario; 
-    public:
-        Usuario();
-        ~Usuario();
-        void deletarUsuario(); 
-        void seguirUsuario(Usuario user); 
-        void bloquearUsuario(Usuario user); 
 };
 
 #endif
->>>>>>> 93353da73c7a50d2e9c35f177ee4d9c967bdb0b8

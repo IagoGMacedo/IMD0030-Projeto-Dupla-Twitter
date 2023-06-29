@@ -1,24 +1,25 @@
-<<<<<<< HEAD
 #include "../include/Usuario.h"
-#include "../include/helper.h"
-#include <string>
-using namespace std;
+#include "../include/Helper.h"
+#include <iostream>
 
 //Construtores e destrutor
-Usuario::Usuario(string nomePerfil, /*Conjunto<Tweet> listaTweets[],*/ int qntdSeguidores, int qntdSeguindo, 
-                /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados, */ 
-                string email, string nomeUsuario) {
+Usuario::Usuario(std::string nomePerfil, Conjunto<Tweet> listaTweets, int qntdSeguidores, int qntdSeguindo, Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados, std::string email, std::string nomeUsuario) {
     this->nomePerfil = nomePerfil;
-    //this->listaTweets = listaTweets;
+    this->listaTweets = listaTweets;
     this->qntdSeguidores = qntdSeguidores;
     this->qntdSeguindo = qntdSeguindo;
-    //this->listaSeguindo = listaSeguindo;
-    //this->listaSeguidores = listaSeguidores;
-    //this->listaBloqueados = listaBloqueados;
+    this->listaSeguindo = listaSeguindo;
+    this->listaSeguidores = listaSeguidores;
+    this->listaBloqueados = listaBloqueados;
     this->email = email;
     this->nomeUsuario = nomeUsuario;    
-    
-};
+}
+
+Usuario::Usuario(std::string nomePerfil, std::string email, std::string nomeUsuario) {
+    this->nomePerfil = nomePerfil;
+    this->email = email;
+    this->nomeUsuario = nomeUsuario;
+}
 
 Usuario::Usuario() {
 }
@@ -28,97 +29,103 @@ Usuario::~Usuario() {
 
 
 //Setters
-void Usuario::setNomePerfil(string nomePerfil) {
+void Usuario::setNomePerfil(std::string nomePerfil) {
     this->nomePerfil = nomePerfil;
-};
-/*  
-void Usuario::setlistaTweets(Conjunto<Tweet> listaTweets) {
+};  
+void Usuario::setListaTweets(Conjunto<Tweet> listaTweets) {
     this->listaTweets = listaTweets;
 }
-*/    
 void Usuario::setQntdSeguidores(int qntdSeguidores) {
     this->qntdSeguidores = qntdSeguidores;
 }
-
 void Usuario::setQntdSeguindo(int qntdSeguindo) {
     this->qntdSeguindo = qntdSeguindo;
 }
-/*
-void Usuario::setlistaSeguindo(Conjunto<Usuarios> listaSeguindo) {
+void Usuario::setListaSeguindo(Conjunto<Usuario> listaSeguindo) {
     this->listaSeguindo = listaSeguindo;
 }
-
-void Usuario::setlistaSeguidores(Conjunto<Usuarios> listaSeguidos) {
-    this->listaSeguidores = listaeguidores;
+void Usuario::setListaSeguidores(Conjunto<Usuario> listaSeguidos) {
+    this->listaSeguidores = listaSeguidores;
 }
-*/
-void Usuario::setEmail(string email) {
+void Usuario::setListaBloqueados(Conjunto<Usuario> listaBloqueados) {
+    this->listaBloqueados = listaBloqueados;
+}
+void Usuario::setEmail(std::string email) {
     this->email = email;
 }
-    
-void Usuario::setNomeUsuario(string nomeUsuario) {
+void Usuario::setNomeUsuario(std::string nomeUsuario) {
     this->nomeUsuario = nomeUsuario;
 }
 
 
 //Setters
-string Usuario::getNomePerfil() {
+std::string Usuario::getNomePerfil() {
     return this->nomePerfil;
 }
 /*    
-Conjunto<Tweet> Usuario::getlistaTweets();
+Conjunto<Tweet> Usuario::setListaTweets( Conjunto<Tweet> listaTweet ) {
+    this->listaTweet = listaTweet;
+}
     
-int Usuario::getQntdSeguidores();
-int Usuario::getQntdSeguindo();
-*/
+Conjunto<Tweet> Usuario::setListaSeguidores( Conjunto<Tweet> listaSeguidores ) {
 
+}
+Conjunto<Tweet> Usuario::setListaSeguindo( Conjunto<Tweet> listaSeguindo ){
+    
+}
+*/
 int Usuario::getQntdSeguidores() {
     return this->qntdSeguidores;
 }
-
 int Usuario::getQntdSeguindo() {
     return this->qntdSeguindo;
 }
-
-/*
-Conjunto<Usuarios> Usuario::getlistaSeguindo(){
+Conjunto<Usuario> Usuario::getListaSeguindo(){
+    return this->listaSeguindo;
 }
-
-Conjunto<Usuarios> Usuario::getlistaSeguidores(){
+Conjunto<Usuario> Usuario::getListaSeguidores(){
+    return this->listaSeguidores;
 }
-*/
-string Usuario::getEmail() {
+Conjunto<Usuario> Usuario::getListaBloqueados(){
+    return this->listaBloqueados;
+}
+std::string Usuario::getEmail() {
     return this->email;
 }
-
-string Usuario::getNomeUsuario() {
+std::string Usuario::getNomeUsuario() {
     return this->nomeUsuario;
 }
-    
+
 
 //Outros Metodos
-void Usuario::deletarUsuario( string confirmacao ) {
+void Usuario::deletarUsuario(std::string confirmacao) {
     if (confirmacao == this->getNomePerfil()) {
         this->~Usuario();
     }
 }
 
-void Usuario::seguirUsuario( Usuario user ) {
-    //this->listaSeguindo.adicionar(user);
-    //user->listaSeguidores.adicionar();
+void Usuario::seguirUsuario(Usuario user, Usuario ownner) {
+    if (this->listaSeguindo.buscar(user)) {
+        throw "Usuario já seguido";
+    }
+    this->listaSeguindo.inserir(user);
+    this->qntdSeguindo++;
+    
+    user.listaSeguidores.inserir(ownner);
+    user.qntdSeguidores++;
 }
 
-void Usuario::bloquearUsuario( Usuario user ){
-    //this->listaBloqueados.adicionar(user);
+void Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
+    if (!this->listaSeguindo.buscar(user)) {
+        throw "Usuario não seguido";
+    }
+    this->listaSeguindo.inserir(user);
+    this->qntdSeguindo--;
+    
+    user.listaSeguidores.inserir(ownner);
+    user.qntdSeguidores--;
 }
 
-
-=======
-#include "../include/Usuario.h"
-#include "../include/Conjunto.h"
-
-
-Usuario::Usuario(){
-
+void Usuario::bloquearUsuario(Usuario user){
+    this->listaBloqueados.inserir(user);
 }
->>>>>>> 93353da73c7a50d2e9c35f177ee4d9c967bdb0b8
