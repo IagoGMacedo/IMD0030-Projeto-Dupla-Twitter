@@ -1,9 +1,6 @@
 #ifndef CONJUNTO_H
 #define CONJUNTO_H
 
-#include "../include/Usuario.h"
-#include "../include/Tweet.h"
-
 
 template <typename T>
 class Conjunto{
@@ -25,5 +22,6 @@ class Conjunto{
 template<typename T>
 Conjunto<T>::Conjunto(void){
 
-};
+}
+
 #endif

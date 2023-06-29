@@ -1,40 +1,41 @@
 #ifndef TWEET_H
 #define TWEET_H
 
-#include "../include/Usuario.h"
+#include <iostream>
 #include "../include/ListaEncad.h"
 #include "../include/Conjunto.h"
-#include <iostream>
+#include "../include/Usuario.h"
+
 
 class Tweet{
     private:
-        Usuario autorTweet;
+        //Usuario autorTweet;
         std::string conteudoTweet;
         int qntdCurtidas;
-        Conjunto<Usuario> listaCurtidas;
+        //Conjunto<Usuario> listaCurtidas;
         ListaEncad<Tweet> listaComentarios;
 
     public:
         //Construtores e destrutor
-        Tweet(Usuario autorTweet, std::string conteudoTweet, int qntdCurtidas, ListaEncad<Tweet> listaComentarios);
+        Tweet(/*Usuario autorTweet, */ std::string conteudoTweet, int qntdCurtidas, ListaEncad<Tweet> listaComentarios);
         Tweet(void);
         ~Tweet(void);
 
         //Getters
-        Usuario getAutorTweet();
+        //Usuario getAutorTweet();
         std::string getConteudoTweet();
         int getQntdCurtidas();
         ListaEncad<Tweet> getListaComentarios();
 
         //Setters
-        void getAutorTweet(Usuario autorTweet);
+        //void getAutorTweet(Usuario autorTweet);
         void getConteudoTweet(std::string conteudoTweet);
         void getQntdCurtidas(int qntdCurtidas);
         void getListaComentarios(ListaEncad<Tweet> listaComentarios);
 
         //Outros metodos
-        void curtirTweet(Usuario user);
-        void descurtirTweet(Usuario user);
+        //void curtirTweet(Usuario user);
+        //void descurtirTweet(Usuario user);
         void comentarTweet(Tweet comentario);
 
 };

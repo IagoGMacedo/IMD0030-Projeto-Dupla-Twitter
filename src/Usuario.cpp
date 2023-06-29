@@ -1,16 +1,18 @@
+#include <iostream>
 #include "../include/Usuario.h"
 #include "../include/Helper.h"
-#include <iostream>
 
 //Construtores e destrutor
-Usuario::Usuario(std::string nomePerfil, Conjunto<Tweet> listaTweets, int qntdSeguidores, int qntdSeguindo, Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados, std::string email, std::string nomeUsuario) {
+Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string email, std::string nomeUsuario) {
     this->nomePerfil = nomePerfil;
-    this->listaTweets = listaTweets;
+    //this->listaTweets = listaTweets;
     this->qntdSeguidores = qntdSeguidores;
     this->qntdSeguindo = qntdSeguindo;
+    /*
     this->listaSeguindo = listaSeguindo;
     this->listaSeguidores = listaSeguidores;
     this->listaBloqueados = listaBloqueados;
+    */
     this->email = email;
     this->nomeUsuario = nomeUsuario;    
 }
@@ -21,7 +23,7 @@ Usuario::Usuario(std::string nomePerfil, std::string email, std::string nomeUsua
     this->nomeUsuario = nomeUsuario;
 }
 
-Usuario::Usuario() {
+Usuario::Usuario(void) {
 }
 
 Usuario::~Usuario() {
@@ -32,15 +34,18 @@ Usuario::~Usuario() {
 void Usuario::setNomePerfil(std::string nomePerfil) {
     this->nomePerfil = nomePerfil;
 };  
+/*
 void Usuario::setListaTweets(Conjunto<Tweet> listaTweets) {
     this->listaTweets = listaTweets;
 }
+*/
 void Usuario::setQntdSeguidores(int qntdSeguidores) {
     this->qntdSeguidores = qntdSeguidores;
 }
 void Usuario::setQntdSeguindo(int qntdSeguindo) {
     this->qntdSeguindo = qntdSeguindo;
 }
+/*
 void Usuario::setListaSeguindo(Conjunto<Usuario> listaSeguindo) {
     this->listaSeguindo = listaSeguindo;
 }
@@ -50,6 +55,7 @@ void Usuario::setListaSeguidores(Conjunto<Usuario> listaSeguidos) {
 void Usuario::setListaBloqueados(Conjunto<Usuario> listaBloqueados) {
     this->listaBloqueados = listaBloqueados;
 }
+*/
 void Usuario::setEmail(std::string email) {
     this->email = email;
 }
@@ -80,6 +86,7 @@ int Usuario::getQntdSeguidores() {
 int Usuario::getQntdSeguindo() {
     return this->qntdSeguindo;
 }
+/*
 Conjunto<Usuario> Usuario::getListaSeguindo(){
     return this->listaSeguindo;
 }
@@ -89,6 +96,7 @@ Conjunto<Usuario> Usuario::getListaSeguidores(){
 Conjunto<Usuario> Usuario::getListaBloqueados(){
     return this->listaBloqueados;
 }
+*/
 std::string Usuario::getEmail() {
     return this->email;
 }
@@ -103,7 +111,7 @@ void Usuario::deletarUsuario(std::string confirmacao) {
         this->~Usuario();
     }
 }
-
+/*
 void Usuario::seguirUsuario(Usuario user, Usuario ownner) {
     if (this->listaSeguindo.buscar(user)) {
         throw "Usuario já seguido";
@@ -129,3 +137,4 @@ void Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
 void Usuario::bloquearUsuario(Usuario user){
     this->listaBloqueados.inserir(user);
 }
+*/

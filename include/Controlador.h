@@ -15,4 +15,5 @@ class Controlador{
         Controlador();
         ~Controlador();
 };
+
 #endif
