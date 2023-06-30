@@ -3,3 +3,7 @@
 Feed::Feed(){
     
 }
+
+Feed::~Feed(){
+
+}

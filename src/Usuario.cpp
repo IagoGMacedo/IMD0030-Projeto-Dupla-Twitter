@@ -3,7 +3,7 @@
 #include "../include/Helper.h"
 
 //Construtores e destrutor
-Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string email, std::string nomeUsuario) {
+Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario) {
     this->nomePerfil = nomePerfil;
     //this->listaTweets = listaTweets;
     this->qntdSeguidores = qntdSeguidores;
@@ -13,15 +13,23 @@ Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qn
     this->listaSeguidores = listaSeguidores;
     this->listaBloqueados = listaBloqueados;
     */
-    this->email = email;
+    this->emailUsuario = emailUsuario;
     this->nomeUsuario = nomeUsuario;    
 }
 
-Usuario::Usuario(std::string nomePerfil, std::string email, std::string nomeUsuario) {
+Usuario::Usuario(std::string nomePerfil, std::string emailUsuario, std::string nomeUsuario) {
     this->nomePerfil = nomePerfil;
-    this->email = email;
+    this->emailUsuario = emailUsuario;
     this->nomeUsuario = nomeUsuario;
 }
+
+Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario){
+    this->nomePerfil = nomePerfil;
+    this->nomeUsuario = nomeUsuario;
+    this->emailUsuario = emailUsuario;
+    this->senhaUsuario = senhaUsuario;
+}
+
 
 Usuario::Usuario(void) {
 }
@@ -56,8 +64,8 @@ void Usuario::setListaBloqueados(Conjunto<Usuario> listaBloqueados) {
     this->listaBloqueados = listaBloqueados;
 }
 */
-void Usuario::setEmail(std::string email) {
-    this->email = email;
+void Usuario::setemailUsuario(std::string emailUsuario) {
+    this->emailUsuario = emailUsuario;
 }
 void Usuario::setNomeUsuario(std::string nomeUsuario) {
     this->nomeUsuario = nomeUsuario;
@@ -97,8 +105,8 @@ Conjunto<Usuario> Usuario::getListaBloqueados(){
     return this->listaBloqueados;
 }
 */
-std::string Usuario::getEmail() {
-    return this->email;
+std::string Usuario::getemailUsuario() {
+    return this->emailUsuario;
 }
 std::string Usuario::getNomeUsuario() {
     return this->nomeUsuario;
