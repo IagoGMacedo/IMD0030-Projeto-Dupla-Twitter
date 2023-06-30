@@ -17,12 +17,6 @@ Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qn
     this->nomeUsuario = nomeUsuario;    
 }
 
-Usuario::Usuario(std::string nomePerfil, std::string emailUsuario, std::string nomeUsuario) {
-    this->nomePerfil = nomePerfil;
-    this->emailUsuario = emailUsuario;
-    this->nomeUsuario = nomeUsuario;
-}
-
 Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario){
     this->nomePerfil = nomePerfil;
     this->nomeUsuario = nomeUsuario;
@@ -64,7 +58,7 @@ void Usuario::setListaBloqueados(Conjunto<Usuario> listaBloqueados) {
     this->listaBloqueados = listaBloqueados;
 }
 */
-void Usuario::setemailUsuario(std::string emailUsuario) {
+void Usuario::setEmailUsuario(std::string emailUsuario) {
     this->emailUsuario = emailUsuario;
 }
 void Usuario::setNomeUsuario(std::string nomeUsuario) {
@@ -105,7 +99,7 @@ Conjunto<Usuario> Usuario::getListaBloqueados(){
     return this->listaBloqueados;
 }
 */
-std::string Usuario::getemailUsuario() {
+std::string Usuario::getEmailUsuario() {
     return this->emailUsuario;
 }
 std::string Usuario::getNomeUsuario() {

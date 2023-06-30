@@ -87,7 +87,7 @@ void Controlador::registrar(){
     std::cout << "Digite o seu email:" << std::endl;
     std::cin >> emailDigitado;
     Usuario novoUsuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
-    std:: cout << novoUsuario.getemailUsuario() << std::endl;
+    std:: cout << novoUsuario.getEmailUsuario() << std::endl;
     std::cout << "Usuário criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
     std::cin >> emailDigitado;
 }

@@ -26,7 +26,6 @@ private:
 public:
     //Construtores e destrutor
     Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario);
-    Usuario(std::string nomePerfil, std::string emailUsuario, std::string nomeUsuario);
     Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario);
     Usuario(void);
     ~Usuario();
@@ -41,7 +40,7 @@ public:
     Conjunto<Usuario> getListaSeguidores();
     Conjunto<Usuario> getListaBloqueados();
     */
-    std::string getemailUsuario();
+    std::string getEmailUsuario();
     std::string getNomeUsuario();
 
     //Setters
@@ -54,7 +53,7 @@ public:
     void setListaSeguidores(Conjunto<Usuario> listaSeguidos);
     void setListaBloqueados(Conjunto<Usuario> listaBloqueados);
     */
-    void setemailUsuario(std::string emailUsuario);
+    void setEmailUsuario(std::string emailUsuario);
     void setNomeUsuario(std::string nomeUsuario);
 
     //Outros Metodos
