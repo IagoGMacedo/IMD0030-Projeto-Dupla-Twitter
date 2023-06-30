@@ -8,8 +8,10 @@ class Controlador{
     private:
         Usuario usuarioLogado;
         Feed feedUsuarioLogado;
+        //Conjunto<Usuario> listaUsuariosGeral;
     public:
-        void fazerLogin(std::string nomeUsuario, std::string senhaUsuario);
+        void fazerLogin();
+        void registrar();
         void encerrarSessao();
         void iniciarPrograma();
         Controlador();
