@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <string>
 #include "../include/Controlador.h"
-
+//#include "../include/Conjunto.h"
 
 /*
     ideias
@@ -12,7 +12,9 @@
 */
 
 Controlador::Controlador() {
-    //this->listaUsuariosGeral=Conjunto<Usuario>(10);
+    //talvez use new aqui
+    this->listaUsuariosGeral= Conjunto<Usuario>();
+    this->feedUsuarioLogado = Feed();
 }
 
 Controlador::~Controlador() {
@@ -89,6 +91,8 @@ void Controlador::registrar(){
     Usuario novoUsuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
     std:: cout << novoUsuario.getEmailUsuario() << std::endl;
     std::cout << "Usuário criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
+
+    this->listaUsuariosGeral.inserir(novoUsuario);
     std::cin >> emailDigitado;
 }
 

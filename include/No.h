@@ -13,7 +13,6 @@ public:
     No();
     No( T );
     No( T, No*, No* );
-    ~No();
     T getValor();
     void setValor(T val);
     No* getProximo();
@@ -21,4 +20,52 @@ public:
 	No* getAnterior();
 	void setAnterior(No*);
 };
-#endif
+
+template<typename T>
+No<T>::No(void):
+proximo(NULL) {}
+
+template<typename T>
+No<T>::No(T val):
+valor(val), proximo(NULL), anterior(NULL) {}
+ 
+template<typename T>
+No<T>::No(T val, No* n, No* p):
+valor(val), proximo(n), anterior(p) {}
+
+template<typename T>
+T No<T>::getValor(void)
+{
+    return this->valor;
+}
+
+template<typename T>
+void No<T>::setValor(T t)
+{
+    this->valor = t;
+}
+
+template<typename T>
+No<T>* No<T>::getProximo(void)
+{
+    return this->proximo;
+}
+
+template<typename T>
+void No<T>::setProximo(No<T>* n)
+{
+    this->proximo = n;
+}
+
+template<typename T>
+No<T>* No<T>::getAnterior(void)
+{
+	return this->anterior;
+}
+
+template<typename T>
+void No<T>::setAnterior(No<T>* p)
+{
+	this->anterior = p;
+}
+#endif 

@@ -3,12 +3,14 @@
 
 #include "../include/Usuario.h"
 #include "../include/Feed.h"
+#include "../include/Conjunto.h"
+
 
 class Controlador{
     private:
         Usuario usuarioLogado;
         Feed feedUsuarioLogado;
-        //Conjunto<Usuario> listaUsuariosGeral;
+        Conjunto<Usuario> listaUsuariosGeral;
     public:
         void fazerLogin();
         void registrar();

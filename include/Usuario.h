@@ -1,10 +1,14 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include "../include/Helper.h"
-#include "../include/Tweet.h"
-#include "../include/ListaEncad.h"
+//#include "../include/Helper.h"
+//#include "../include/ListaEncad.h"
 #include "../include/Conjunto.h"
+#include "../include/Tweet.h"
+
+
+
+
 #include <iostream>
 using namespace std;
 
@@ -18,10 +22,10 @@ private:
     int qntdSeguidores;
     int qntdSeguindo;
 
-    //Conjunto<Tweet> listaTweets;
-    //Conjunto<Usuario> listaSeguindo;
-    //Conjunto<Usuario> listaSeguidores;
-    //Conjunto<Usuario> listaBloqueados;
+    Conjunto<Tweet> listaTweets;
+    Conjunto<Usuario> listaSeguindo;
+    Conjunto<Usuario> listaSeguidores;
+    Conjunto<Usuario> listaBloqueados;
 
 public:
     //Construtores e destrutor

@@ -48,6 +48,8 @@ ListaEncad<T>::ListaEncad(void) {
 
     this->cabeca->setAnterior(nullptr);
     this->cauda->setProximo(nullptr);
+
+    this->quantidade = 100;
 }
 
 template <typename T>
@@ -83,7 +85,7 @@ No<T>* ListaEncad<T>::getCauda(void) {
 template <typename T>
 T ListaEncad<T>::recuperar(int pos) {
     if (pos > this->getTamanho()) {
-        throw "Posição não existente"
+        throw "Posição não existente";
     }
     if (this->vazia()) {
         throw "Lista vazia";
@@ -197,7 +199,7 @@ T ListaEncad<T>::removerDaCabeca(void) {
     T del_valor = del->getValor();
 
     del->getProximo()->setAnterior( del->getAnterior() );
-    del->getAnterior()->setProximo( del->getProximo() )
+    del->getAnterior()->setProximo( del->getProximo() );
 
     delete del;
     quantidade--;

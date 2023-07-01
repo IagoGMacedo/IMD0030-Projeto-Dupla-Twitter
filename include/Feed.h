@@ -4,6 +4,9 @@
 #include "../include/Conjunto.h"
 #include "../include/Tweet.h"
 #include "../include/Usuario.h"
+
+
+
 class Feed{
      public:
         Feed();
@@ -11,7 +14,7 @@ class Feed{
         void popularFeed(Usuario user);
     private:
         Conjunto<Tweet> listaTweets;
-        Conjunto<Usuario> listaUsuario;
+        //Conjunto<Usuario> listaUsuario;
    
 
         

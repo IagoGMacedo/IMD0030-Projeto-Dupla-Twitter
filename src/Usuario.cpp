@@ -1,8 +1,11 @@
 #include <iostream>
 #include "../include/Usuario.h"
-#include "../include/Helper.h"
+//#include "../include/Helper.h"
+//#include "../include/Tweet.h"
+//#include "../include/ListaEncad.h"
 
 //Construtores e destrutor
+
 Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario) {
     this->nomePerfil = nomePerfil;
     //this->listaTweets = listaTweets;
@@ -14,14 +17,26 @@ Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qn
     this->listaBloqueados = listaBloqueados;
     */
     this->emailUsuario = emailUsuario;
-    this->nomeUsuario = nomeUsuario;    
-}
+    this->nomeUsuario = nomeUsuario;
+
+    this->listaTweets = Conjunto<Tweet>();
+    this->listaSeguindo = Conjunto<Usuario>();
+    this->listaSeguidores = Conjunto<Usuario>();
+    this->listaBloqueados = Conjunto<Usuario>(); 
+} 
+
 
 Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario){
     this->nomePerfil = nomePerfil;
     this->nomeUsuario = nomeUsuario;
     this->emailUsuario = emailUsuario;
     this->senhaUsuario = senhaUsuario;
+
+    this->listaTweets = Conjunto<Tweet>();
+    this->listaSeguindo = Conjunto<Usuario>();
+    this->listaSeguidores = Conjunto<Usuario>();
+    this->listaBloqueados = Conjunto<Usuario>();
+
 }
 
 

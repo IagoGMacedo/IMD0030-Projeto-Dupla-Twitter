@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include "../include/ListaEncad.h"
-#include "../include/Conjunto.h"
-#include "../include/Usuario.h"
+//#include "../include/Conjunto.h"
+//#include "../include/Usuario.h"
+
 
 
 class Tweet{

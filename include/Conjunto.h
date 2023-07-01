@@ -1,7 +1,9 @@
 #ifndef CONJUNTO_H
 #define CONJUNTO_H
 
-//#include <iostream>
+#include <iostream>
+
+
 
 template <typename T>
 class Conjunto{
@@ -9,6 +11,7 @@ class Conjunto{
         Conjunto();
         //Conjunto(int capacidade);
         ~Conjunto();
+
         bool inserir(T elemento);
         bool remover(T elemento);
         bool buscar(T elemento) const;
@@ -23,41 +26,63 @@ class Conjunto{
 //metodos vão ser aqui mesmo, nao tem cpp
 template<typename T>
 Conjunto<T>::Conjunto(void){
-}
-
-template<typename T>
-Conjunto<T>::~Conjunto(void){
-}
-
-/*
-template<typename T>
-Conjunto<T>::Conjunto(int capacidade){
-
-}
-template<typename T>
-Conjunto<T>::Conjunto(int capacidade){
-    this->capacidade=capacidade;
-    this->elementos = new T[capacidade];
     this->quantidade = 0;
+    this->capacidade = 10;
+    this->elementos  = new T[capacidade];
 }
-
-
 
 template<typename T>
 Conjunto<T>::~Conjunto(void){
-
+    delete []this->elementos;
 }
 
 template<typename T>
 bool Conjunto<T>::inserir(T elemento)
 {
-    if(this->quantidade<this->capacidade && !this->buscar(elemento)){
+    if(this->quantidade<this->capacidade){
         this->elementos[quantidade] = elemento;
         this->quantidade++;
         return true;
     } 
     return false;
 }
+
+template<typename T>
+bool Conjunto<T>::buscar(T elemento) const
+{
+    for(int i =0;i<this->quantidade;i++){
+        if(this->elementos[i]==elemento){
+            return true;
+        } 
+    }
+    return false;
+
+}
+template<typename T>
+bool Conjunto<T>::remover(T elemento)
+{
+    //TO-DO
+    if(this->buscar(elemento)){
+        for(int i =0;i<this->quantidade;i++){
+            if(this->elementos[i]==elemento){
+                //abordagem de fazer swap
+                T auxiliar = this->elementos[i];
+                this->elementos[i] = this->elementos[this->quantidade-1];
+                this->elementos[this->quantidade-1] = auxiliar;
+                this->quantidade--;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+template<typename T>
+int Conjunto<T>::tamanho() const
+{
+    return this->quantidade;
+}
+
 
 template<typename T>
 void Conjunto<T>::imprimir() const
@@ -69,6 +94,6 @@ void Conjunto<T>::imprimir() const
     }
     std::cout << "}" << std::endl;
 }
-*/
+
 
 #endif
