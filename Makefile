@@ -36,9 +36,8 @@ $(TARGET): $(addprefix $(BIN_DIR)/, $(OBJECTS))
 clean:
 	rm -f $(BIN_DIR)/*.o $(TARGET)
 
-# Teste seletivo
-select:
-	$(CC) $(CFLAGS) $(SRC_DIR)/Controlador.cpp $(SRC_DIR)/Usuario.cpp $(SRC_DIR)/Feed.cpp -o $(BIN_DIR)/test.exe
-	./$(BIN_DIR)/test.exe
+# Teste seletivo $(SRC_DIR)/Tweet.cpp
+select: 
+	$(CC) $(CFLAGS) $(SRC_DIR)/Controlador.cpp $(SRC_DIR)/Usuario.cpp $(SRC_DIR)/Feed.cpp -o $(BIN_DIR)/programa
 
-
+.PHONY: all clean select

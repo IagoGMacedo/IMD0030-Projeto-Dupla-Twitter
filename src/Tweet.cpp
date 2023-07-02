@@ -2,18 +2,17 @@
 //#include "../include/ListaEncad.h"
 
 
-Tweet::Tweet(/*Usuario autorTweet,*/ std::string conteudoTweet, int qntdCurtidas, ListaEncad<Tweet> listaComentarios) {
+Tweet::Tweet(/*Usuario autorTweet,*/ std::string conteudoTweet, int qntdCurtidas/*, ListaEncad<Tweet> listaComentarios*/) {
     //this->autorTweet = autorTweet;
     this->conteudoTweet = conteudoTweet;
     this->qntdCurtidas = qntdCurtidas;
-    this->listaComentarios = listaComentarios;
+    //this->listaComentarios = listaComentarios;
 
-    this->listaComentarios = ListaEncad<Tweet>();
 
 }
 
 Tweet::Tweet(void) {
-    this->listaComentarios = ListaEncad<Tweet>();
+    //this->listaComentarios = ListaEncad<Tweet>();
 }
 
 Tweet::~Tweet(void) {

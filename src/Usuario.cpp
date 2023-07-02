@@ -6,11 +6,11 @@
 
 //Construtores e destrutor
 
-Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario) {
+Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario, std::string senhaUsuario) {
     this->nomePerfil = nomePerfil;
     //this->listaTweets = listaTweets;
-    this->qntdSeguidores = qntdSeguidores;
-    this->qntdSeguindo = qntdSeguindo;
+    this->qntdSeguidores = 0;
+    this->qntdSeguindo = 0;
     /*
     this->listaSeguindo = listaSeguindo;
     this->listaSeguidores = listaSeguidores;
@@ -18,11 +18,13 @@ Usuario::Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qn
     */
     this->emailUsuario = emailUsuario;
     this->nomeUsuario = nomeUsuario;
-
+    this->senhaUsuario = senhaUsuario;
+    /*
     this->listaTweets = Conjunto<Tweet>();
     this->listaSeguindo = Conjunto<Usuario>();
     this->listaSeguidores = Conjunto<Usuario>();
     this->listaBloqueados = Conjunto<Usuario>(); 
+    */
 } 
 
 
@@ -31,12 +33,12 @@ Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string em
     this->nomeUsuario = nomeUsuario;
     this->emailUsuario = emailUsuario;
     this->senhaUsuario = senhaUsuario;
-
+    /*
     this->listaTweets = Conjunto<Tweet>();
     this->listaSeguindo = Conjunto<Usuario>();
     this->listaSeguidores = Conjunto<Usuario>();
     this->listaBloqueados = Conjunto<Usuario>();
-
+*/
 }
 
 

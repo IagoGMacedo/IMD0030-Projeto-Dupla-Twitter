@@ -3,8 +3,8 @@
 
 //#include "../include/Helper.h"
 //#include "../include/ListaEncad.h"
-#include "../include/Conjunto.h"
-#include "../include/Tweet.h"
+//#include "../include/Conjunto.h"
+//#include "../include/Tweet.h"
 
 
 
@@ -21,15 +21,15 @@ private:
 
     int qntdSeguidores;
     int qntdSeguindo;
-
+    /*
     Conjunto<Tweet> listaTweets;
     Conjunto<Usuario> listaSeguindo;
     Conjunto<Usuario> listaSeguidores;
     Conjunto<Usuario> listaBloqueados;
-
+    */
 public:
     //Construtores e destrutor
-    Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario);
+    Usuario(std::string nomePerfil, /*Conjunto<Tweet> listaTweets,*/ int qntdSeguidores, int qntdSeguindo, /*Conjunto<Usuario> listaSeguindo, Conjunto<Usuario> listaSeguidores , Conjunto<Usuario> listaBloqueados,*/ std::string emailUsuario, std::string nomeUsuario, std::string senhaUsuario);
     Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario);
     Usuario(void);
     ~Usuario();

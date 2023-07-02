@@ -14,6 +14,7 @@ class Conjunto{
 
         bool inserir(T elemento);
         bool remover(T elemento);
+        T recuperar(int);
         bool buscar(T elemento) const;
         int tamanho() const;
         void imprimir() const;
@@ -39,7 +40,7 @@ Conjunto<T>::~Conjunto(void){
 template<typename T>
 bool Conjunto<T>::inserir(T elemento)
 {
-    if(this->quantidade<this->capacidade){
+    if(this->quantidade < this->capacidade){
         this->elementos[quantidade] = elemento;
         this->quantidade++;
         return true;
@@ -75,6 +76,16 @@ bool Conjunto<T>::remover(T elemento)
         }
     }
     return false;
+}
+
+template<typename T>
+T Conjunto<T>::recuperar(int i) 
+{
+    if (this->quantidade > 0) {
+        return this->elementos[i];
+    }
+
+    throw "false";
 }
 
 template<typename T>

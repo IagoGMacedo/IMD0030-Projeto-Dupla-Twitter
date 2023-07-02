@@ -5,7 +5,7 @@
 
 
 Feed::Feed(){
-    this->listaTweets = Conjunto<Tweet>();
+    //this->listaTweets = Conjunto<Tweet>();
 }
 
 Feed::~Feed(){
