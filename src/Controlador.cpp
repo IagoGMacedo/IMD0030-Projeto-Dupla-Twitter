@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "../include/Controlador.h"
 #define USERS_FILE "../data/Users.txt"
 //#include "../include/Conjunto.h"
@@ -19,12 +20,14 @@
 Controlador::Controlador() {
     //talvez use new aqui
 
-    //this->listaUsuariosGeral = Conjunto<Usuario>();
+    this->listaUsuariosGeral = * new Conjunto<Usuario>();
     //this->feedUsuarioLogado = Feed();
 }
 
 Controlador::~Controlador() {
 }
+
+
 
 void Controlador::iniciarPrograma(){
     std::string stringEntrada;
@@ -38,7 +41,7 @@ void Controlador::iniciarPrograma(){
         std::cout << "[2] Registre-se" << std::endl;
         std::cout << "[3] Encerrar programa" << std::endl;
         std::cin >> stringEntrada;
-        std::system("clear");
+        //std::system("clear");
 
         if(stringEntrada.length() > 1)
             stringEntrada = "0";
@@ -110,6 +113,45 @@ void Controlador::fazerLogin(){
     */
 }
 
+#define FILE_NAME "../data/Users.dat"
+int salvarListaUsuarios(Conjunto<Usuario> conjuntoUsuario){
+    std::fstream file;
+
+	file.open(FILE_NAME,ios::out|ios::binary);
+
+	if(!file){
+		cout<<"Erro ao criar arquivo...\n";
+		return -1;
+	}
+	
+	file.write((char*)&conjuntoUsuario,sizeof(conjuntoUsuario));
+	file.close();
+	cout<<"Dados salvos no arquivo (array).\n";
+    return 1;
+
+}
+Conjunto<Usuario> conjuntoRecuperado = * new Conjunto<Usuario>;
+void lerListaUsuarios(Conjunto<Usuario> conjuntoUsuario){
+    std::fstream file;
+	//Funcionario*listaFuncionarioRecuperados;
+	file.open(FILE_NAME,ios::in|ios::binary);
+	if(!file){
+		cout<<"Erro ao abrir arquivo...\n";
+	}
+	
+	if( file.read((char*)&conjuntoRecuperado, sizeof(conjuntoUsuario)) ){
+			cout<<endl<<endl;
+			cout<<"Dado extraido do arquivo...\n";
+			//Imprime o objeto
+            conjuntoRecuperado.imprimir();
+
+	}
+	else{
+		cout<<"Erro ao ler dado do arquivo...\n";
+	}
+	file.close();	
+}
+
 void Controlador::registrar(){ 
     std::system("clear");
     std::string nomeUsuarioDigitado;
@@ -131,9 +173,19 @@ void Controlador::registrar(){
 
     Usuario novoUsuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
     
-    //this->listaUsuariosGeral.inserir(novoUsuario);
+    this->listaUsuariosGeral.inserir(novoUsuario);
+    this->listaUsuariosGeral.imprimir();
+     std:: cout << "--------------"<< std::endl;
+        std::vector<Usuario*> vetorUsuarios;
+        vetorUsuarios.push_back(&novoUsuario);
+        salvarListaUsuarios(this->listaUsuariosGeral);
+        lerListaUsuarios(this->listaUsuariosGeral);
+        std::cout << "Usuário " << novoUsuario.getNomeUsuario() << " criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
+        std::cin >> emailDigitado;
+
     //Inserir usuario no arquivo binário, ou txt
     
+    /*
     ofstream file(USERS_FILE);
     if (!file.is_open()) {
         std::cerr << "Erro ao abrir o arquivo" << std::endl;
@@ -145,13 +197,16 @@ void Controlador::registrar(){
         }
         
         file.close();
+
+         std:: cout << "--------------"<< std::endl;
+        salvarListaUsuarios(this->listaUsuariosGeral);
+        lerListaUsuarios();
+        std::cout << "Usuário " << novoUsuario.getNomeUsuario() << " criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
+        std::cin >> emailDigitado;
     }
-
-    std:: cout << novoUsuario.getEmailUsuario() << std::endl;
-    std::cout << "Usuário " << novoUsuario.getNomeUsuario() << " criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
-
-
-    std::cin >> emailDigitado;
+    */
+    //std:: cout << novoUsuario << std::endl;
+   
 }
 
 int main(){
@@ -160,3 +215,4 @@ int main(){
 
     return 0;
 }
+

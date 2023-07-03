@@ -48,6 +48,11 @@ Usuario::Usuario(void) {
 Usuario::~Usuario() {
 }
 
+std::ostream& operator<< (std::ostream &o, Usuario &user){
+            o << user.getNomeUsuario() <<", "<<user.getNomePerfil();
+            return o;
+        };
+
 
 //Setters
 void Usuario::setNomePerfil(std::string nomePerfil) {

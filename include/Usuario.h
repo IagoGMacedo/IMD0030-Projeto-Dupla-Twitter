@@ -33,6 +33,7 @@ public:
     Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario);
     Usuario(void);
     ~Usuario();
+    friend std::ostream& operator << (std::ostream &o, Usuario &user);
 
     //Getters
     std::string getNomePerfil();
