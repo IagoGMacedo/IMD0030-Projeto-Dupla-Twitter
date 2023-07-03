@@ -1,57 +1,64 @@
 #include "../include/Tweet.h"
-//#include "../include/ListaEncad.h"
+#include "../include/ListaEncad.h"
 
 
-Tweet::Tweet(/*Usuario autorTweet,*/ std::string conteudoTweet, int qntdCurtidas/*, ListaEncad<Tweet> listaComentarios*/) {
-    //this->autorTweet = autorTweet;
+Tweet::Tweet(Usuario autorTweet, std::string conteudoTweet, int qntdCurtidas/*, ListaEncad<Tweet> listaComentarios*/) {
+    this->autorTweet = autorTweet;
     this->conteudoTweet = conteudoTweet;
     this->qntdCurtidas = qntdCurtidas;
-    //this->listaComentarios = listaComentarios;
+    this->listaComentarios = listaComentarios;
 
 
 }
 
 Tweet::Tweet(void) {
-    //this->listaComentarios = ListaEncad<Tweet>();
+    this->listaComentarios = ListaEncad<Tweet>();
 }
 
 Tweet::~Tweet(void) {
 }
 
+std::ostream& operator << (std::ostream &out, Tweet &post) {
+    Usuario user = post.getAutorTweet();
+
+    out << user.getNomeUsuario() << " @" << user.getNomePerfil() << "\n"
+    << post.getConteudoTweet() << "\n"
+    << "👍" << post.getQntdCurtidas() /*<< post.getListaComentarios().getTamanho()*/
+    << std::endl;
+    
+    return out;
+};
+
 //Getters
-/*
 Usuario Tweet::getAutorTweet() {
     return this->autorTweet;
-} */
+} 
 std::string Tweet::getConteudoTweet() {
     return this->conteudoTweet;
 }
 int Tweet::getQntdCurtidas() {
     return this->qntdCurtidas;
 }
-/*
 ListaEncad<Tweet> Tweet::getListaComentarios() {
     return this->listaComentarios;
 }
 
-//Setters
 
-void Tweet::getAutorTweet(Usuario autorTweet) {
+//Setters
+void Tweet::setAutorTweet(Usuario autorTweet) {
     this->autorTweet = autorTweet;
-}*/
-void Tweet::getConteudoTweet(std::string conteudoTweet) {
+}
+void Tweet::setConteudoTweet(std::string conteudoTweet) {
     this->conteudoTweet = conteudoTweet;
 }
-void Tweet::getQntdCurtidas(int qntdCurtidas) {
+void Tweet::setQntdCurtidas(int qntdCurtidas) {
     this->qntdCurtidas = qntdCurtidas;
 }
-/*
-void Tweet::getListaComentarios(ListaEncad<Tweet> listaComentarios) {
+void Tweet::setListaComentarios(ListaEncad<Tweet> listaComentarios) {
     this->listaComentarios = listaComentarios;
 }
 
 //Outros metodos
-
 void Tweet::curtirTweet(Usuario user) {
     if (this->listaCurtidas.buscar(user)) {
         throw "Não é possível curtir um tweet já curtido\n";
@@ -71,4 +78,3 @@ void Tweet::descurtirTweet(Usuario user) {
 void Tweet::comentarTweet(Tweet comentario) {
     this->listaComentarios.inserirNaCauda(comentario);
 }
-*/
