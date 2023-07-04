@@ -3,9 +3,11 @@
 
 #include "../include/Helper.h"
 #include "../include/ListaEncad.h"
-#include "../include/Conjunto.h"
+//#include "../include/std::vector.h"
 #include "../include/Tweet.h"
 #include <iostream>
+#include <vector>
+
 
 class Usuario {
 private:
@@ -16,11 +18,12 @@ private:
 
     int qntdSeguidores;
     int qntdSeguindo;
+    int qntdTweets;
     
-    Conjunto<Tweet> listaTweets;
-    Conjunto<Usuario> listaSeguindo;
-    Conjunto<Usuario> listaSeguidores;
-    Conjunto<Usuario> listaBloqueados;
+    std::vector<Tweet> listaTweets;
+    std::vector<Usuario> listaSeguindo;
+    std::vector<Usuario> listaSeguidores;
+    std::vector<Usuario> listaBloqueados;
     
 public:
     //Construtores e destrutor
@@ -28,35 +31,38 @@ public:
     Usuario(void);
     ~Usuario();
     friend std::ostream& operator << (std::ostream &o, Usuario &user);
+    bool operator == (Usuario &u);
 
     //Getters
     std::string getNomePerfil();
-    Conjunto<Tweet> getListaTweets();
+    std::vector<Tweet> getListaTweets();
     int getQntdSeguidores();
     int getQntdSeguindo();
-    Conjunto<Usuario> getListaSeguindo();
-    Conjunto<Usuario> getListaSeguidores();
-    Conjunto<Usuario> getListaBloqueados();
+    std::vector<Usuario> getListaSeguindo();
+    std::vector<Usuario> getListaSeguidores();
+    std::vector<Usuario> getListaBloqueados();
     std::string getEmailUsuario();
     std::string getNomeUsuario();
+    int getQntdTweets();
 
     //Setters
     void setNomePerfil(std::string nomePerfil);
-    void setListaTweets(Conjunto<Tweet> listaTweets);
+    void setListaTweets(std::vector<Tweet> listaTweets);
     void setQntdSeguidores(int qntdSeguidores);
     void setQntdSeguindo(int qntdSeguindo);
-    void setListaSeguindo(Conjunto<Usuario> listaSeguindo);
-    void setListaSeguidores(Conjunto<Usuario> listaSeguidos);
-    void setListaBloqueados(Conjunto<Usuario> listaBloqueados);
+    void setListaSeguindo(std::vector<Usuario> listaSeguindo);
+    void setListaSeguidores(std::vector<Usuario> listaSeguidos);
+    void setListaBloqueados(std::vector<Usuario> listaBloqueados);
     void setEmailUsuario(std::string emailUsuario);
     void setNomeUsuario(std::string nomeUsuario);
+    void setQntdTweets(int novaQuantidade);
 
     //Outros Metodos
     void deletarUsuario(std::string confirmacao);
-    
     void seguirUsuario(Usuario user, Usuario ownner);
     void deixarDeSeguir(Usuario user, Usuario ownner);
     void bloquearUsuario(Usuario user);
+    void addTweet(Tweet novoTweet);
     
 };
 

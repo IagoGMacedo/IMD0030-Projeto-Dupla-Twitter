@@ -10,7 +10,7 @@ class Controlador{
     private:
         Usuario usuarioLogado;
         Feed feedUsuarioLogado;
-        Conjunto<Usuario> listaUsuariosGeral;
+        std::vector<Usuario> listaUsuariosGeral;
     public:
         void fazerLogin();
         void registrar();
