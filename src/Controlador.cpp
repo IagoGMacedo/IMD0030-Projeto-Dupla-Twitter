@@ -19,7 +19,7 @@
 */
 
 Controlador::Controlador() {
-    this->listaUsuariosGeral = * new std::vector<Usuario>();
+    this->listaUsuariosGeral = * new std::map<std::string, Usuario>();
     this->usuarioLogado = * new Usuario();
     this->feedUsuarioLogado = * new Feed();
 }
@@ -28,14 +28,14 @@ Controlador::~Controlador() {
 }
 
 
-void lerListaUsuarios(std::vector<Usuario> listaUsuarios){
+void lerListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
     std::fstream arquivoEmpregados;
-    std::vector<Usuario> vetorUsuariosRecuperados = * new std::vector<Usuario>;
+    std::map<std::string, Usuario> vetorUsuariosRecuperados = * new std::map<std::string, Usuario>;
     arquivoEmpregados.open(USERS_FILE, std::ios::in | std::ios::binary);
     if(arquivoEmpregados.is_open()){
-        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(listaUsuarios));
-        for(int i =0;i< vetorUsuariosRecuperados.size();i++){
-            std::cout << vetorUsuariosRecuperados[i].getNomeUsuario() << std::endl;
+        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(vetorUsuariosRecuperados));
+        for(auto i : vetorUsuariosRecuperados){
+            std::cout << i.second.getNomeUsuario() << std::endl;
         }
         std::cout << "programa feito com sucesso" << std::endl;
         
@@ -43,7 +43,7 @@ void lerListaUsuarios(std::vector<Usuario> listaUsuarios){
     arquivoEmpregados.close();
 }
 
-void salvarListaUsuarios(std::vector<Usuario> listaUsuarios){
+void salvarListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
     std::fstream arquivoUsuarios;
     arquivoUsuarios.open(USERS_FILE, std::ios::out | std::ios::binary);
     if(arquivoUsuarios.is_open()){
@@ -95,14 +95,31 @@ void Controlador::iniciarPrograma(){
 
 void Controlador::fazerLogin(){
     std::system("clear");
-    std::string usuarioDigitado;
-    std::string senhaDigitada;
+    std::string emailDigitado, senhaDigitada;
 
 
-    std::cout << "Digite o seu usuario:" << std::endl;
-    std::cin >> usuarioDigitado;
+    std::cout << "Digite o seu email:" << std::endl;
+    std::cin >> emailDigitado;
     std::cout << "Digite a sua senha:" << std::endl;
     std::cin >> senhaDigitada;
+
+    auto contaExiste = this->listaUsuariosGeral.find(emailDigitado);
+    if(contaExiste != this->listaUsuariosGeral.end()){
+        if(this->listaUsuariosGeral.at(emailDigitado).conferirSenha(senhaDigitada)){
+            //login deu certo 
+            //mandar ele para pagina inicial do programa
+            std::cout << "login realizado com sucesso !" << std::endl;
+            this->usuarioLogado = this->listaUsuariosGeral.at(emailDigitado);
+            this->iniciarSessao();
+        } else{
+            std::cout << "Senha inválida" << std::endl;
+        }
+    } else{
+        std::cout << "Email inválido" << std::endl;
+    }
+    std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
+    std::cin >> emailDigitado;
+    
         /*
     ifstream file(USERS_FILE);
     if (!file.is_open()) {
@@ -153,31 +170,50 @@ void Controlador::registrar(){
 
     std::cout << "Digite o seu email:" << std::endl;
     std::cin >> emailDigitado;
-
-    Usuario novoUsuario = * new Usuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
-    
-    this->listaUsuariosGeral.push_back(novoUsuario);
-    Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet", 0);
-    novoUsuario.addTweet(novoTweet);
-    for(int i =0;i<listaUsuariosGeral.size();i++){
-        std::cout << listaUsuariosGeral[i].getNomeUsuario() <<", "<<listaUsuariosGeral[i].getEmailUsuario()<<std::endl;
-        for(int i =0;i<novoUsuario.getQntdTweets();i++){
-            std::cout << novoUsuario.getListaTweets()[i].getConteudoTweet() <<std::endl;
+    //vou verificar se já não existe alguma conta com esse email, caso exista, reclama!
+    auto emailJaExiste = this->listaUsuariosGeral.find(emailDigitado);
+    if(emailJaExiste != this->listaUsuariosGeral.end()){
+        std::cout << "Esse email já existe, use outro" << std::endl;
+    } else{
+        Usuario novoUsuario = * new Usuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
+        this->listaUsuariosGeral.insert({novoUsuario.getEmailUsuario(), novoUsuario});
+        Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet", 0);
+        novoUsuario.addTweet(novoTweet);
+        //for(int i =0;i<listaUsuariosGeral.size();i++){
+        std::cout << "Usuário "<<novoUsuario.getNomeUsuario() <<" criado com sucesso" << std::endl;
+        for(auto i :this->listaUsuariosGeral){
+            std::cout <<i.second.getNomeUsuario() <<", "<<i.second.getEmailUsuario()<<std::endl;
+            for(int i =0;i<novoUsuario.getQntdTweets();i++){
+                std::cout << novoUsuario.getListaTweets()[i].getConteudoTweet() <<std::endl;
+            }
         }
     }
     std:: cout << "--------------"<< std::endl;
     salvarListaUsuarios(this->listaUsuariosGeral);
-    //lerListaUsuarios(this->listaUsuariosGeral); tá dando segmentation fault
+    std:: cout << "--------------"<< std::endl;
+    lerListaUsuarios(this->listaUsuariosGeral);
 
-    std::cout << "Usuário " << novoUsuario.getNomeUsuario() << " criado com sucesso, aperte qualquer tecla para fazer login" << std::endl;
+    std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
-
 }
 
 int main(){
     Controlador controlador = * new Controlador();
     controlador.iniciarPrograma();
-
     return 0;
 }
+
+void Controlador::iniciarSessao(){
+    std::string opcaoDigitada;
+    while(opcaoDigitada!="3"){
+        std::system("clear");
+        std::cout << "Seja bem vindo," << this->usuarioLogado.getNomeUsuario() << std::endl;
+        std::cout << "O que deseja fazer??" << std::endl;
+        std::cout << "[1] Escrever Tweet" << std::endl;
+        std::cout << "[2] Acessar Feed" << std::endl;
+        std::cout << "[3] Encerrar Sessão" << std::endl;
+        std::cin >>opcaoDigitada;
+    }
+}
+
 

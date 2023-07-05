@@ -154,3 +154,11 @@ void Usuario::addTweet(Tweet novoTweet){
     this->listaTweets.push_back(novoTweet);
     this->qntdTweets++;
 }
+
+bool Usuario::conferirSenha(std::string senhaDigitada){
+    if(senhaDigitada == this->senhaUsuario){
+        return true;
+    }
+    return false;
+}
+

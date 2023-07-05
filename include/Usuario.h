@@ -63,6 +63,7 @@ public:
     void deixarDeSeguir(Usuario user, Usuario ownner);
     void bloquearUsuario(Usuario user);
     void addTweet(Tweet novoTweet);
+    bool conferirSenha(std::string senhaDigitada);
     
 };
 
