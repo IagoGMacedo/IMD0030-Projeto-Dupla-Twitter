@@ -21,7 +21,7 @@ class Tweet{
 
     public:
         //Construtores e destrutor
-        Tweet(Usuario autorTweet,  std::string conteudoTweet, int qntdCurtidas/*, ListaEncad<Tweet> listaComentarios*/);
+        Tweet(Usuario autorTweet,  std::string conteudoTweet);
         Tweet(void);
         ~Tweet(void);
         friend std::ostream& operator << (std::ostream &o, Tweet &tweet);

@@ -2,11 +2,10 @@
 #include "../include/Usuario.h"
 
 
-Tweet::Tweet(Usuario autorTweet, std::string conteudoTweet, int qntdCurtidas/*, ListaEncad<Tweet> listaComentarios*/) {
+Tweet::Tweet(Usuario autorTweet, std::string conteudoTweet) {
     this->autorTweet = &autorTweet;
     this->conteudoTweet = conteudoTweet;
-    this->qntdCurtidas = qntdCurtidas;
-
+    this->qntdCurtidas = 0;
     this->listaCurtidas = * new std::vector<Usuario*>;
 }
 

@@ -177,7 +177,7 @@ void Controlador::registrar(){
     } else{
         Usuario novoUsuario = * new Usuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
         this->listaUsuariosGeral.insert({novoUsuario.getEmailUsuario(), novoUsuario});
-        Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet", 0);
+        Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet");
         novoUsuario.addTweet(novoTweet);
         //for(int i =0;i<listaUsuariosGeral.size();i++){
         std::cout << "Usuário "<<novoUsuario.getNomeUsuario() <<" criado com sucesso" << std::endl;
@@ -213,6 +213,22 @@ void Controlador::iniciarSessao(){
         std::cout << "[2] Acessar Feed" << std::endl;
         std::cout << "[3] Encerrar Sessão" << std::endl;
         std::cin >>opcaoDigitada;
+
+        if (opcaoDigitada == "1") {
+            std::string conteudoTweet;
+            std::cout << "O que está pensando: " << std::endl;
+            std::cin >> conteudoTweet;
+            std::cout << std::endl;
+
+            Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
+
+            usuarioLogado.addTweet(novoTweet);
+        }
+
+        if (opcaoDigitada == "2") {
+            std::system("clear");
+            //PopularFeed() e tal
+        }
     }
 }
 
