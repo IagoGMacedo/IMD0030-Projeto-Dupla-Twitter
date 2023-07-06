@@ -1,21 +1,17 @@
 #include "../include/Tweet.h"
 #include "../include/Usuario.h"
-
+#include <vector>
 
 Tweet::Tweet(Usuario autorTweet, std::string conteudoTweet) {
     this->autorTweet = &autorTweet;
     this->conteudoTweet = conteudoTweet;
     this->qntdCurtidas = 0;
-    this->listaCurtidas = * new std::vector<Usuario*>;
+    this->listaCurtidas = * new std::map<std::string, Usuario>;
+    this->listaComentarios = * new std::vector<Tweet*>;
 }
 
 Tweet::Tweet(void) {
-    //this->listaComentarios = * new ListaEncad<Tweet>();
-    //this->autorTweet = * new Usuario();
     this->qntdCurtidas = 0;
-    //this->listaCurtidas = * new Conjunto<Usuario*>;
-
-    //this->listaCurtidas = * new Conjunto<Usuario>;
 }
 
 Tweet::~Tweet(void) {
@@ -45,15 +41,14 @@ std::string Tweet::getConteudoTweet() {
 int Tweet::getQntdCurtidas() {
     return this->qntdCurtidas;
 }
-std::vector<Usuario*> Tweet::getListaCurtidas(){
+std::vector<Tweet*> Tweet::getListaComentarios(){
+    return this->listaComentarios;
+}
+
+std::map<std::string, Usuario> Tweet::getListaCurtidas() {
     return this->listaCurtidas;
 }
 
-/*
-ListaEncad<Tweet> Tweet::getListaComentarios() {
-    return this->listaComentarios;
-}
-*/
 
 
 //Setters
@@ -66,39 +61,33 @@ void Tweet::setConteudoTweet(std::string conteudoTweet) {
 void Tweet::setQntdCurtidas(int qntdCurtidas) {
     this->qntdCurtidas = qntdCurtidas;
 }
-void Tweet::setListaCurtidas(std::vector<Usuario*> listaCurtidas){
+void Tweet::setListaCurtidas(std::map<std::string, Usuario> listaCurtidas){
     this->listaCurtidas = listaCurtidas;
 }
 
-/*
-void Tweet::setListaComentarios(ListaEncad<Tweet> listaComentarios) {
+void Tweet::setListaComentarios(std::vector<Tweet*> listaComentarios) {
     this->listaComentarios = listaComentarios;
 }
-*/
 
 //Outros metodos
-/*
 void Tweet::curtirTweet(Usuario user) {
-    /*
-    if (this->listaCurtidas.buscar(user)) {
+    if (this->listaCurtidas.find(user.getEmailUsuario()) == this->listaCurtidas.end()) {
         throw "Não é possível curtir um tweet já curtido\n";
     }
-    this->listaCurtidas.inserir(&user);
+    this->listaCurtidas.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
     this->qntdCurtidas++;
 }
-*/
 
-/*
 void Tweet::descurtirTweet(Usuario user) {
-    if (!this->listaCurtidas.buscar(user)) {
+    if (this->listaCurtidas.find(user.getEmailUsuario()) != this->listaCurtidas.end()) {
         throw "Não é possível descurtir um tweet não curtido\n";
     }
-    this->listaCurtidas.remover(user);
+    this->listaCurtidas.erase(user.getEmailUsuario());
     this->qntdCurtidas--;
 }
 
-void Tweet::comentarTweet(Tweet comentario) {
-    this->listaComentarios.inserirNaCauda(comentario);
+void Tweet::comentarTweet(Tweet *comentario) {
+    this->listaComentarios.push_back(comentario);
 }
 
-*/
+

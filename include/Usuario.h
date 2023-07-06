@@ -7,7 +7,7 @@
 #include "../include/Tweet.h"
 #include <iostream>
 #include <vector>
-
+#include <map>
 
 class Usuario {
 private:
@@ -21,9 +21,9 @@ private:
     int qntdTweets;
     
     std::vector<Tweet> listaTweets;
-    std::vector<Usuario> listaSeguindo;
-    std::vector<Usuario> listaSeguidores;
-    std::vector<Usuario> listaBloqueados;
+    std::map<std::string, Usuario> listaSeguindo;
+    std::map<std::string, Usuario> listaSeguidores;
+    std::map<std::string, Usuario> listaBloqueados;
     
 public:
     //Construtores e destrutor
@@ -38,9 +38,9 @@ public:
     std::vector<Tweet> getListaTweets();
     int getQntdSeguidores();
     int getQntdSeguindo();
-    std::vector<Usuario> getListaSeguindo();
-    std::vector<Usuario> getListaSeguidores();
-    std::vector<Usuario> getListaBloqueados();
+    std::map<std::string, Usuario> getListaSeguindo();
+    std::map<std::string, Usuario> getListaSeguidores();
+    std::map<std::string, Usuario> getListaBloqueados();
     std::string getEmailUsuario();
     std::string getNomeUsuario();
     int getQntdTweets();
@@ -50,9 +50,9 @@ public:
     void setListaTweets(std::vector<Tweet> listaTweets);
     void setQntdSeguidores(int qntdSeguidores);
     void setQntdSeguindo(int qntdSeguindo);
-    void setListaSeguindo(std::vector<Usuario> listaSeguindo);
-    void setListaSeguidores(std::vector<Usuario> listaSeguidos);
-    void setListaBloqueados(std::vector<Usuario> listaBloqueados);
+    void setListaSeguindo(std::map<std::string, Usuario> listaSeguindo);
+    void setListaSeguidores(std::map<std::string, Usuario> listaSeguidos);
+    void setListaBloqueados(std::map<std::string, Usuario> listaBloqueados);
     void setEmailUsuario(std::string emailUsuario);
     void setNomeUsuario(std::string nomeUsuario);
     void setQntdTweets(int novaQuantidade);
@@ -62,6 +62,7 @@ public:
     void seguirUsuario(Usuario user, Usuario ownner);
     void deixarDeSeguir(Usuario user, Usuario ownner);
     void bloquearUsuario(Usuario user);
+    void desbloquearUsuario(Usuario user);
     void addTweet(Tweet novoTweet);
     bool conferirSenha(std::string senhaDigitada);
     

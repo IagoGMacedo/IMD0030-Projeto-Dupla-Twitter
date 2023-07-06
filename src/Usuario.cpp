@@ -15,18 +15,18 @@ Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string em
     this->senhaUsuario = senhaUsuario;
 
     this->listaTweets = * new std::vector<Tweet>();
-    this->listaSeguindo = * new std::vector<Usuario>();
-    this->listaSeguidores = * new std::vector<Usuario>();
-    this->listaBloqueados = * new std::vector<Usuario>();
+    this->listaSeguindo = * new std::map<std::string, Usuario>();
+    this->listaSeguidores = * new std::map<std::string, Usuario>();
+    this->listaBloqueados = * new std::map<std::string, Usuario>();
 
 }
 
 
 Usuario::Usuario(void) {
     this->listaTweets =  * new std::vector<Tweet>();
-    this->listaSeguindo = * new std::vector<Usuario>();
-    this->listaSeguidores = * new std::vector<Usuario>();
-    this->listaBloqueados = * new std::vector<Usuario>();
+    this->listaSeguindo = * new std::map<std::string, Usuario>();
+    this->listaSeguidores = * new std::map<std::string, Usuario>();
+    this->listaBloqueados = * new std::map<std::string, Usuario>();
 }
 
 Usuario::~Usuario() {
@@ -62,13 +62,13 @@ void Usuario::setQntdSeguindo(int qntdSeguindo) {
 void Usuario::setQntdTweets(int novaQuantidade){
     this->qntdTweets = novaQuantidade;
 }
-void Usuario::setListaSeguindo(std::vector<Usuario> listaSeguindo) {
+void Usuario::setListaSeguindo(std::map<std::string, Usuario> listaSeguindo) {
     this->listaSeguindo = listaSeguindo;
 }
-void Usuario::setListaSeguidores(std::vector<Usuario> listaSeguidos) {
+void Usuario::setListaSeguidores(std::map<std::string, Usuario> listaSeguidos) {
     this->listaSeguidores = listaSeguidores;
 }
-void Usuario::setListaBloqueados(std::vector<Usuario> listaBloqueados) {
+void Usuario::setListaBloqueados(std::map<std::string, Usuario> listaBloqueados) {
     this->listaBloqueados = listaBloqueados;
 }
 void Usuario::setEmailUsuario(std::string emailUsuario) {
@@ -86,13 +86,13 @@ std::string Usuario::getNomePerfil() {
 std::vector<Tweet> Usuario::getListaTweets() {
     return this->listaTweets;
 }
-std::vector<Usuario> Usuario::getListaSeguidores() {
+std::map<std::string, Usuario> Usuario::getListaSeguidores() {
     return this->listaSeguidores;
 }
-std::vector<Usuario> Usuario::getListaSeguindo(){
+std::map<std::string, Usuario> Usuario::getListaSeguindo(){
     return this->listaSeguindo;
 }
-std::vector<Usuario> Usuario::getListaBloqueados() {
+std::map<std::string, Usuario> Usuario::getListaBloqueados() {
     return this->listaBloqueados;
 }
 int Usuario::getQntdSeguidores() {
@@ -122,34 +122,50 @@ void Usuario::deletarUsuario(std::string confirmacao) {
 }
 
 void Usuario::seguirUsuario(Usuario user, Usuario ownner) {
-    /* não tem buscar direto no vector, mas tem o std::find
-    if (this->listaSeguindo.buscar(user)) {
+    std::pair<std::string, Usuario> par_user = std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
+    std::pair<std::string, Usuario> par_ownner = std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
+
+    if (this->listaSeguindo.find(user.getEmailUsuario()) == this->listaSeguindo.end()) {
         throw "Usuario já seguido";
     }
-    */
-    this->listaSeguindo.push_back(user);
+    
+    this->listaSeguindo.insert(par_user);
     this->qntdSeguindo++;
     
-    user.listaSeguidores.push_back(ownner);
+    user.listaSeguidores.insert(par_ownner);
     user.qntdSeguidores++;
 }
 
 void Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
-    /*
-    if (!this->listaSeguindo.buscar(user)) {
+    std::pair<std::string, Usuario> par_user = std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
+    std::pair<std::string, Usuario> par_ownner = std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
+
+    if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
         throw "Usuario não seguido";
     }
-    */
-    this->listaSeguindo.push_back(user);
+    
+    this->listaSeguindo.insert(par_user);
     this->qntdSeguindo--;
     
-    user.listaSeguidores.push_back(ownner);
+    user.listaSeguidores.insert(par_ownner);
     user.qntdSeguidores--;
 }
 
 void Usuario::bloquearUsuario(Usuario user){
-    this->listaBloqueados.push_back(user);
+    if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
+        throw "Usuario já bloqueado";
+    }
+    this->listaBloqueados.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
 }
+
+void Usuario::desbloquearUsuario(Usuario user){
+    if (this->listaSeguindo.find(user.getEmailUsuario()) == this->listaSeguindo.end()) {
+        throw "Usuario não bloqueado";
+    }
+    this->listaBloqueados.erase(user.getEmailUsuario());
+}
+
+
 void Usuario::addTweet(Tweet novoTweet){
     this->listaTweets.push_back(novoTweet);
     this->qntdTweets++;

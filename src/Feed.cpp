@@ -1,9 +1,9 @@
 #include "../include/Feed.h"
-
+#include <vector>
 
 Feed::Feed(){
-    this->listaTweets = * new Conjunto<Tweet>();
-    //this->listaUsuarios = * new Conjunto<Usuario>();
+    this->listaTweets = * new std::vector<Tweet>();
+    this->listaUsuarios = * new std::vector<Usuario>();
 }
 
 Feed::~Feed(){

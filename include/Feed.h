@@ -3,13 +3,13 @@
 
 #include "../include/Conjunto.h"
 #include "../include/Usuario.h"
-
+#include <vector>
 
 
 class Feed {
     private:
-        Conjunto<Tweet> listaTweets;
-        //Conjunto<Usuario> listaUsuarios;
+        std::vector<Tweet> listaTweets;
+        std::vector<Usuario> listaUsuarios;
 
     public:
         Feed();

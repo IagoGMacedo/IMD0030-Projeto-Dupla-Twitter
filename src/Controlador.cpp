@@ -215,10 +215,10 @@ void Controlador::iniciarSessao(){
         std::cin >>opcaoDigitada;
 
         if (opcaoDigitada == "1") {
+            std::system("clear");
             std::string conteudoTweet;
-            std::cout << "O que está pensando: " << std::endl;
+            std::cout << "O que está pensando? " << std::endl;
             std::cin >> conteudoTweet;
-            std::cout << std::endl;
 
             Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
 

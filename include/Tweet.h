@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <vector>
-
-//#include "../include/ListaEncad.h"
-//#include "../include/Conjunto.h"
+#include <map>
 
 //declarando que existe aqui para usar include somente no .cpp
 class Usuario;
@@ -15,9 +13,8 @@ class Tweet{
         Usuario *autorTweet;
         std::string conteudoTweet;
         int qntdCurtidas;
-        //talvez um conjunto de Usuario* de ruim, talvez mudar pra vector!
-        //ListaEncad<Tweet> listaComentarios;
-        std::vector<Usuario*> listaCurtidas;
+        std::map<std::string, Usuario> listaCurtidas;
+        std::vector<Tweet*> listaComentarios;
 
     public:
         //Construtores e destrutor
@@ -31,20 +28,20 @@ class Tweet{
         Usuario getAutorTweet();
         std::string getConteudoTweet();
         int getQntdCurtidas();
-        std::vector<Usuario*> getListaCurtidas();
-        //ListaEncad<Tweet> getListaComentarios();
+        std::map<std::string, Usuario> getListaCurtidas();
+        std::vector<Tweet*> getListaComentarios();
 
         //Setters
         void setAutorTweet(Usuario autorTweet);
         void setConteudoTweet(std::string conteudoTweet);
         void setQntdCurtidas(int qntdCurtidas);
-        void setListaCurtidas(std::vector<Usuario*>);
-        //void setListaComentarios(ListaEncad<Tweet> listaComentarios);
+        void setListaCurtidas(std::map<std::string, Usuario> listaCurtidas);
+        void setListaComentarios(std::vector<Tweet*>);
         
         //Outros metodos
         void curtirTweet(Usuario user);
         void descurtirTweet(Usuario user);
-        void comentarTweet(Tweet comentario);
+        void comentarTweet(Tweet *comentario);
         
 
 };
