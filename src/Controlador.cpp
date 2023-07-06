@@ -54,7 +54,6 @@ void salvarListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
 }
 
 
-
 void Controlador::iniciarPrograma(){
     std::string stringEntrada;
 
