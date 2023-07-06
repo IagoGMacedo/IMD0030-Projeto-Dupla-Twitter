@@ -90,4 +90,15 @@ void Tweet::comentarTweet(Tweet *comentario) {
     this->listaComentarios.push_back(comentario);
 }
 
+std::string Tweet::printarTweet(){
+    //ou printa direto aqui, ou retorna a string pra printar lá
+    std::cout <<this->getAutorTweet().getNomePerfil() << std::endl;
+    std::cout <<this->getConteudoTweet() << std::endl;
+    std::cout <<"com " << this->listaComentarios.size() << " ";
+    std::cout <<"like " << this->qntdCurtidas << " ";
+    std::cout <<" " << std::endl;
+
+}
+
+
 

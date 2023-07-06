@@ -42,6 +42,7 @@ class Tweet{
         void curtirTweet(Usuario user);
         void descurtirTweet(Usuario user);
         void comentarTweet(Tweet *comentario);
+        std::string printarTweet();
         
 
 };

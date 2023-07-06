@@ -33,7 +33,7 @@ void lerListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
     std::map<std::string, Usuario> vetorUsuariosRecuperados = * new std::map<std::string, Usuario>;
     arquivoEmpregados.open(USERS_FILE, std::ios::in | std::ios::binary);
     if(arquivoEmpregados.is_open()){
-        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(vetorUsuariosRecuperados));
+        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(listaUsuarios));
         for(auto i : vetorUsuariosRecuperados){
             std::cout << i.second.getNomeUsuario() << std::endl;
         }
@@ -177,24 +177,40 @@ void Controlador::registrar(){
     } else{
         Usuario novoUsuario = * new Usuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
         this->listaUsuariosGeral.insert({novoUsuario.getEmailUsuario(), novoUsuario});
-        Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet");
-        novoUsuario.addTweet(novoTweet);
-        //for(int i =0;i<listaUsuariosGeral.size();i++){
         std::cout << "Usuário "<<novoUsuario.getNomeUsuario() <<" criado com sucesso" << std::endl;
-        for(auto i :this->listaUsuariosGeral){
-            std::cout <<i.second.getNomeUsuario() <<", "<<i.second.getEmailUsuario()<<std::endl;
-            for(int i =0;i<novoUsuario.getQntdTweets();i++){
-                std::cout << novoUsuario.getListaTweets()[i].getConteudoTweet() <<std::endl;
-            }
-        }
+        fazerTestes(novoUsuario);
     }
     std:: cout << "--------------"<< std::endl;
-    salvarListaUsuarios(this->listaUsuariosGeral);
+    //salvarListaUsuarios(this->listaUsuariosGeral);
     std:: cout << "--------------"<< std::endl;
-    lerListaUsuarios(this->listaUsuariosGeral);
-
+   // lerListaUsuarios(this->listaUsuariosGeral);
+    
     std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
+}
+
+//função só pra gente testar outros metodos
+void Controlador::fazerTestes(Usuario novoUsuario){
+    //adicionando tweet simples
+    Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet");
+    novoUsuario.addTweet(novoTweet);
+    std::cout << "Printando tweets" << std::endl;
+    for(auto i :this->listaUsuariosGeral){
+        for(Tweet tweet : i.second.getListaTweets()){
+            std::cout << tweet.printarTweet() << std::endl;
+        }
+    }
+
+    //testando seguir outro usuario
+    Usuario usuarioTeste = * new Usuario("lucas", "lucas_teste", "lucas@gmail.com",  "1234");
+    this->listaUsuariosGeral.insert({usuarioTeste.getEmailUsuario(), usuarioTeste});
+    novoTweet = * new Tweet(novoUsuario, "primeiro tweet"); //isso aqui vai dar erro por causa da 195 sem delete?
+    usuarioTeste.addTweet(novoTweet);
+
+    //será que vai dar certo no popularfeed?
+    novoUsuario.seguirUsuario(usuarioTeste, novoUsuario);
+
+    
 }
 
 int main(){
@@ -205,13 +221,14 @@ int main(){
 
 void Controlador::iniciarSessao(){
     std::string opcaoDigitada;
-    while(opcaoDigitada!="3"){
+    while(opcaoDigitada!="4"){
         std::system("clear");
         std::cout << "Seja bem vindo," << this->usuarioLogado.getNomeUsuario() << std::endl;
         std::cout << "O que deseja fazer??" << std::endl;
         std::cout << "[1] Escrever Tweet" << std::endl;
         std::cout << "[2] Acessar Feed" << std::endl;
-        std::cout << "[3] Encerrar Sessão" << std::endl;
+        std::cout << "[3] Pesquisar usuário" << std::endl;
+        std::cout << "[4] Encerrar Sessão" << std::endl;
         std::cin >>opcaoDigitada;
 
         if (opcaoDigitada == "1") {
@@ -223,12 +240,14 @@ void Controlador::iniciarSessao(){
             Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
 
             usuarioLogado.addTweet(novoTweet);
+        } else if (opcaoDigitada == "2") {
+            std::system("clear");
+            this->feedUsuarioLogado.popularFeed(this->usuarioLogado);
+        } else if(opcaoDigitada == "3"){
+            //to do
         }
 
-        if (opcaoDigitada == "2") {
-            std::system("clear");
-            //PopularFeed() e tal
-        }
+        
     }
 }
 

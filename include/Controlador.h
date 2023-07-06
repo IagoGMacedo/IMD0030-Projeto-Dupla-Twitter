@@ -21,6 +21,7 @@ class Controlador{
         void iniciarPrograma();
         Controlador();
         ~Controlador();
+        void fazerTestes(Usuario novoUsuario);
 };
 
 #endif
