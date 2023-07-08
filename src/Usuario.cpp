@@ -167,7 +167,7 @@ void Usuario::desbloquearUsuario(Usuario user){
 
 
 void Usuario::addTweet(Tweet novoTweet){
-    this->listaTweets.push_back(novoTweet);
+    this->listaTweets.insert(this->listaTweets.begin(), novoTweet) ;
     this->qntdTweets++;
 }
 

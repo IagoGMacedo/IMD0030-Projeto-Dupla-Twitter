@@ -11,7 +11,6 @@ class Controlador{
     private:
         Usuario usuarioLogado;
         Feed feedUsuarioLogado;
-        //std::vector<Usuario> listaUsuariosGeral;
         std::map<std::string, Usuario> listaUsuariosGeral;
     public:
         void fazerLogin();
@@ -21,7 +20,7 @@ class Controlador{
         void iniciarPrograma();
         Controlador();
         ~Controlador();
-        void fazerTestes(Usuario novoUsuario);
+        void fazerTestes();
 };
 
 #endif

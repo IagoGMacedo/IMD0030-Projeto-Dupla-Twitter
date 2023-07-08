@@ -12,15 +12,12 @@ Feed::~Feed(){
 
 void Feed::popularFeed(Usuario user){
     //Exibir posts de usuarios que está seguindo
-    for(auto m : user.getListaSeguindo()){
-        for(Tweet tweet : user.getListaTweets()){
-            tweet.printarTweet();
+    std::cout << "printando tudo do feed" << std::endl;
+    std::map<std::string, Usuario> mapSeguidores = user.getListaSeguidores();
+    for(auto iterator = mapSeguidores.begin(); iterator != mapSeguidores.end(); ++iterator){
+        std::vector<Tweet> listaTweets = iterator->second.getListaTweets();
+        for(int i =0;i<listaTweets.size();i++){
+                std::cout << listaTweets.at(i).printarTweet() << std::endl;
         }
     }
-    //Exibir posts de usuarios com mais likes
-    /*
-    for (int i = 0; i < this->listaUsuarios.tamanho(); i++) {
-        this->listaUsuarios.recuperar(i).getListaTweets().recuperar(0);
-    }
-    */
 }

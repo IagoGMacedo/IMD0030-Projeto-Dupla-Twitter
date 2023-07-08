@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <map>
 #include <vector>
 #include "../include/Controlador.h"
 #define USERS_FILE "../data/Users.dat"
@@ -177,44 +178,42 @@ void Controlador::registrar(){
         Usuario novoUsuario = * new Usuario(nomeUsuarioDigitado, nomePerfilDigitado, emailDigitado,  senhaDigitada);
         this->listaUsuariosGeral.insert({novoUsuario.getEmailUsuario(), novoUsuario});
         std::cout << "Usuário "<<novoUsuario.getNomeUsuario() <<" criado com sucesso" << std::endl;
-        fazerTestes(novoUsuario);
+        //fazerTestes(novoUsuario);
     }
-    std:: cout << "--------------"<< std::endl;
     //salvarListaUsuarios(this->listaUsuariosGeral);
-    std:: cout << "--------------"<< std::endl;
    // lerListaUsuarios(this->listaUsuariosGeral);
-    
     std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
 }
 
 //função só pra gente testar outros metodos
-void Controlador::fazerTestes(Usuario novoUsuario){
-    //adicionando tweet simples
-    Tweet novoTweet = * new Tweet(novoUsuario, "primeiro tweet");
-    novoUsuario.addTweet(novoTweet);
-    std::cout << "Printando tweets" << std::endl;
-    for(auto i :this->listaUsuariosGeral){
-        for(Tweet tweet : i.second.getListaTweets()){
-            std::cout << tweet.printarTweet() << std::endl;
-        }
+void Controlador::fazerTestes(){
+   Usuario maisNovoUsuario = * new Usuario("iago", "iagola", "iagognobre@gmail.com", "123456");
+   this->listaUsuariosGeral.insert({maisNovoUsuario.getEmailUsuario(), maisNovoUsuario});
+
+   //criando tweet
+   Tweet tweet = * new Tweet(maisNovoUsuario, "vai tomar no cu eu odeio essa linguagem");
+
+   //tentando ver o autor desse tweet
+   Usuario autorTweet = tweet.getAutorTweet();
+   std::cout << "corno: " << autorTweet.getNomeUsuario() << std::endl;
+
+   //iterando usuarios
+   maisNovoUsuario.addTweet(tweet);
+
+   //pegando o desse vetor
+   std::vector<Tweet> listaTweets = maisNovoUsuario.getListaTweets();
+   for(int i =0;i<listaTweets.size();i++){
+        std::cout << listaTweets.at(i).printarTweet() << std::endl;
     }
 
-    //testando seguir outro usuario
-    Usuario usuarioTeste = * new Usuario("lucas", "lucas_teste", "lucas@gmail.com",  "1234");
-    this->listaUsuariosGeral.insert({usuarioTeste.getEmailUsuario(), usuarioTeste});
-    novoTweet = * new Tweet(novoUsuario, "primeiro tweet"); //isso aqui vai dar erro por causa da 195 sem delete?
-    usuarioTeste.addTweet(novoTweet);
-
-    //será que vai dar certo no popularfeed?
-    novoUsuario.seguirUsuario(usuarioTeste, novoUsuario);
-
-    
 }
 
 int main(){
     Controlador controlador = * new Controlador();
     controlador.iniciarPrograma();
+
+    //controlador.fazerTestes();
     return 0;
 }
 
@@ -235,13 +234,13 @@ void Controlador::iniciarSessao(){
             std::string conteudoTweet;
             std::cout << "O que está pensando? " << std::endl;
             std::cin >> conteudoTweet;
-
             Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
-
             usuarioLogado.addTweet(novoTweet);
         } else if (opcaoDigitada == "2") {
             std::system("clear");
             this->feedUsuarioLogado.popularFeed(this->usuarioLogado);
+            std::cout << "Pressione qualquer tecla para voltar" << std::endl;
+            std::cin >>opcaoDigitada;
         } else if(opcaoDigitada == "3"){
             //to do
         }
