@@ -225,7 +225,7 @@ void Controlador::iniciarSessao(){
         std::cout << "O que deseja fazer??" << std::endl;
         std::cout << "[1] Escrever Tweet" << std::endl;
         std::cout << "[2] Acessar Feed" << std::endl;
-        std::cout << "[3] Pesquisar usuário" << std::endl;
+        std::cout << "[3] Pesquisar Usuário" << std::endl;
         std::cout << "[4] Encerrar Sessão" << std::endl;
         std::cin >>opcaoDigitada;
 
@@ -236,13 +236,77 @@ void Controlador::iniciarSessao(){
             std::cin >> conteudoTweet;
             Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
             usuarioLogado.addTweet(novoTweet);
+
         } else if (opcaoDigitada == "2") {
             std::system("clear");
             this->feedUsuarioLogado.popularFeed(this->usuarioLogado);
             std::cout << "Pressione qualquer tecla para voltar" << std::endl;
             std::cin >>opcaoDigitada;
+
         } else if(opcaoDigitada == "3"){
-            //to do
+            std::string profileName;
+            std::cout << "Insira o nome do usuário que deseja pesquisar: " << std::endl;
+            std::cin >> profileName;
+
+            for (auto user : listaUsuariosGeral) {
+                if (user.second.getNomePerfil() == profileName) {
+                    std::system("clear");
+                    std::cout << user.second;
+
+                    std::string opcaoDigitada1;
+                    while (opcaoDigitada1 != "6") {
+                        std::cout << "O que deseja fazer??\n" 
+                        << "[1] Explorar Tweets\n" 
+                        << "[2] Seguir Usuario\n" 
+                        << "[3] Deixar de Seguir\n" 
+                        << "[4] Bloquear Usuario\n"
+                        << "[5] Desbloquear Usuario\n"
+                        << "[6] Sair do Perfil\n"
+                        << std::endl;
+                        std::cin >> opcaoDigitada1;
+
+                        if (opcaoDigitada1 == "1") { 
+                            for (int i = 0; i < user.second.getQntdTweets(); i++) {
+                                std::cout << user.second.getListaTweets()[i];
+                                
+                                std::string opcaoDigitada2;
+                                while (opcaoDigitada2 != "4") {
+                                    std::cout << "\nO que deseja fazer??\n" 
+                                    << "[1] Curtir\n" 
+                                    << "[2] Comentar\n" 
+                                    << "[3] Exibir Comentários\n" 
+                                    << "[4] Próximo Tweet\n"
+                                    << std::endl;
+                                    std::cin >> opcaoDigitada2;
+                                } 
+                            }
+                        }
+
+                        else if (opcaoDigitada1 == "2") { 
+                            usuarioLogado.seguirUsuario(user.second, usuarioLogado);
+                        }
+
+                        else if (opcaoDigitada1 == "3") { 
+                            usuarioLogado.deixarDeSeguir(user.second, usuarioLogado);
+                        }
+
+                        else if (opcaoDigitada1 == "4") { 
+                            usuarioLogado.bloquearUsuario(user.second);
+                        }
+
+                        else if (opcaoDigitada1 == "5") { 
+                            usuarioLogado.desbloquearUsuario(user.second);
+                        }
+
+                        else if (opcaoDigitada == "6") { 
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            
+            //OperarTweet
         }
 
         

@@ -58,11 +58,44 @@ int main() {
         return -1;
     }
     else {
-        //for (size_t i = 0; i < listaUsuariosSalvos.size(); i++) {
-        //auto list = listaUsuariosSalvos.;
+        for (auto user : listaUsuariosSalvos) {
+            
+            auto listaBloqueados = user.second.getListaBloqueados();
+            for (auto bloqueado : listaBloqueados) {
+                //bloqueado.second.
+                //to-do
+            }
 
-        //file.write(linha.c_str(), linha.size());
-        //}
+            auto listaSeguidores = user.second.getListaSeguidores();
+            for (auto seguidor : listaSeguidores) {
+                //to-do
+            }
+
+            auto listaSeguindo = user.second.getListaSeguindo();
+            for (auto seguindo : listaSeguindo) {
+                //to-do
+            }
+
+            auto listaTweets = user.second.getListaTweets();
+            for (auto tweet : listaTweets) {
+                //to-do
+            }
+
+            auto email = user.second.getEmailUsuario();
+            auto nomePerfil = user.second.getNomePerfil();
+            auto nomeUsuario = user.second.getNomeUsuario();
+            auto qntdSeguidores = user.second.getQntdSeguidores();
+            auto qntdSeguindo = user.second.getQntdSeguindo();
+            auto qntdTweets = user.second.getQntdTweets();
+
+            outfile.write(email.c_str(), email.size());
+            outfile.write(nomePerfil.c_str(), nomePerfil.size());
+            outfile.write(nomeUsuario.c_str(), nomeUsuario.size());
+            //outfile.write(qntdSeguidores.c_str(), qntdSeguidores.size());
+            //outfile.write(qntdSeguindo.c_str(), qntdSeguindo.size());
+            //outfile.write(qntdTweets.c_str(), qntdTweets.size());
+
+        }
     }
 
     ifstream infile(FILE);
@@ -70,9 +103,6 @@ int main() {
     if(!infile.is_open()) {
         cerr<< "Erro ao abrir o arquivo";
         return -1;
-    }
-    else {
-        
     }
 
     return 0;

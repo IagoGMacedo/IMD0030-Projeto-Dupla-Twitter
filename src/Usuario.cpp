@@ -33,7 +33,12 @@ Usuario::~Usuario() {
 }
 
 std::ostream& operator<< (std::ostream &o, Usuario &user){
-    o << user.getNomeUsuario() <<", "<<user.getNomePerfil();
+    int i = 0;
+    o << user.getNomeUsuario() << "\n"
+    << "@" << user.getNomePerfil() << "\n"
+    << user.getQntdSeguindo() << " Seguindo" << user.getQntdSeguidores() << " Seguidores\n"; 
+    //<< user.getListaTweets()[i];
+
     return o;
 };
 
