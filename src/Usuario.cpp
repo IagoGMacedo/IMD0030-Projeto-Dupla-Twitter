@@ -125,20 +125,22 @@ void Usuario::deletarUsuario(std::string confirmacao) {
         this->~Usuario();
     }
 }
-
+// user = o outro usuario
+// owner = eu
 void Usuario::seguirUsuario(Usuario user, Usuario ownner) {
-    std::pair<std::string, Usuario> par_user = std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
-    std::pair<std::string, Usuario> par_ownner = std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
+    std::pair<std::string, Usuario> par_user = * new std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
+    std::pair<std::string, Usuario> par_ownner = * new std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
 
-    if (this->listaSeguindo.find(user.getEmailUsuario()) == this->listaSeguindo.end()) {
+    if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
         throw "Usuario já seguido";
-    }
-    
+    }else{
     this->listaSeguindo.insert(par_user);
     this->qntdSeguindo++;
     
     user.listaSeguidores.insert(par_ownner);
     user.qntdSeguidores++;
+    }
+    
 }
 
 void Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {

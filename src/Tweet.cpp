@@ -91,7 +91,7 @@ void Tweet::comentarTweet(Tweet *comentario) {
 }
 
 std::string Tweet::printarTweet(){
-    std::string printTweet = this->autorTweet->getNomePerfil() + " @"+this->autorTweet->getNomeUsuario()+"\n"+
+    std::string printTweet = autorTweet->getNomeUsuario() + " @"+autorTweet->getNomeUsuario()+"\n"+
                         this->getConteudoTweet() + "\n" +
                         "🗨️ " + std::to_string(this->listaComentarios.size()) +
                         " ❤️ " + std::to_string(this->qntdCurtidas) + "\n";

@@ -188,32 +188,37 @@ void Controlador::registrar(){
 
 //função só pra gente testar outros metodos
 void Controlador::fazerTestes(){
-   Usuario maisNovoUsuario = * new Usuario("iago", "iagola", "iagognobre@gmail.com", "123456");
-   this->listaUsuariosGeral.insert({maisNovoUsuario.getEmailUsuario(), maisNovoUsuario});
+   Usuario usuarioIago = * new Usuario("iago", "iagola", "iagognobre@gmail.com", "123456");
+   Usuario usuarioGilberto = * new Usuario("gilberto", "gilbertin", "gilberto@gmail.com", "123456");
 
-   //criando tweet
-   Tweet tweet = * new Tweet(maisNovoUsuario, "vai tomar no cu eu odeio essa linguagem");
+    //colocando no map
+   this->listaUsuariosGeral.insert({usuarioIago.getEmailUsuario(), usuarioIago});
+   this->listaUsuariosGeral.insert({usuarioGilberto.getEmailUsuario(), usuarioGilberto});
 
-   //tentando ver o autor desse tweet
-   Usuario autorTweet = tweet.getAutorTweet();
-   std::cout << "corno: " << autorTweet.getNomeUsuario() << std::endl;
 
-   //iterando usuarios
-   maisNovoUsuario.addTweet(tweet);
+   //criando tweets
+   Tweet tweetIago = * new Tweet(usuarioIago, "chove chuva chove sem parar");
+   Tweet tweetGilberto = * new Tweet(usuarioGilberto, "ele tá sem zap");
 
-   //pegando o desse vetor
-   std::vector<Tweet> listaTweets = maisNovoUsuario.getListaTweets();
-   for(int i =0;i<listaTweets.size();i++){
-        std::cout << listaTweets.at(i).printarTweet() << std::endl;
-    }
+   //adicionando tweets
+   usuarioIago.addTweet(tweetIago);
+   usuarioGilberto.addTweet(tweetGilberto);
+
+    //seguindo outro usuario 
+
+    usuarioIago.seguirUsuario(usuarioGilberto, usuarioIago);
+
+    //tentando popularfeed com o tweet da outra pessoa
+    this->usuarioLogado = usuarioIago;
+    this->feedUsuarioLogado.popularFeed(usuarioIago);
 
 }
 
 int main(){
     Controlador controlador = * new Controlador();
-    controlador.iniciarPrograma();
+    //controlador.iniciarPrograma();
 
-    //controlador.fazerTestes();
+    controlador.fazerTestes();
     return 0;
 }
 
