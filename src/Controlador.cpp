@@ -197,28 +197,54 @@ void Controlador::fazerTestes(){
 
 
    //criando tweets
-   Tweet tweetIago = * new Tweet(usuarioIago, "chove chuva chove sem parar");
-   Tweet tweetGilberto = * new Tweet(usuarioGilberto, "ele tá sem zap");
+   Tweet tweetIago = * new Tweet("chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
+   Tweet tweetGilberto = * new Tweet("ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+
+   Tweet tweetRespostaGilberto = * new Tweet("pois eu vou fazer uma prece",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+
+   tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
+   tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
+
+   //tentando incluir comentarios em um determinado tweet
+    tweetIago.comentarTweet(tweetRespostaGilberto);
 
    //adicionando tweets
    usuarioIago.addTweet(tweetIago);
    usuarioGilberto.addTweet(tweetGilberto);
+   usuarioGilberto.addTweet(tweetRespostaGilberto);
 
     //seguindo outro usuario 
-
     usuarioIago.seguirUsuario(usuarioGilberto, usuarioIago);
+    usuarioGilberto.seguirUsuario(usuarioIago, usuarioGilberto);
 
+    //tentando printar as respostas
+    if(tweetIago.getQntdComentarios() > 0){
+        std::cout << "printando respostas: " << std::endl;
+        std::vector<Tweet> listaComentarios = tweetIago.getListaComentarios();
+        for(int i =0;i<listaComentarios.size();i++){
+            std::cout << listaComentarios.at(i).printarTweet();
+        }
+    }
+
+    
+
+    
     //tentando popularfeed com o tweet da outra pessoa
     this->usuarioLogado = usuarioIago;
-    this->feedUsuarioLogado.popularFeed(usuarioIago);
+    this->feedUsuarioLogado.popularFeed(usuarioIago, this->listaUsuariosGeral);
+
+    // std::map<std::string, Usuario> mapSeguidores = maisNovoUsuario.getListaSeguindo();
+    // for(auto iterator = mapSeguidores.begin(); iterator != mapSeguidores.end(); ++iterator){
+    //     std::cout << "seguindo: " << iterator->second.getNomePerfil() <<", " << iterator->second.getEmailUsuario() << std::endl;
+    // }
 
 }
 
 int main(){
     Controlador controlador = * new Controlador();
-    //controlador.iniciarPrograma();
+    controlador.iniciarPrograma();
 
-    controlador.fazerTestes();
+    //ontrolador.fazerTestes();
     return 0;
 }
 
@@ -239,12 +265,12 @@ void Controlador::iniciarSessao(){
             std::string conteudoTweet;
             std::cout << "O que está pensando? " << std::endl;
             std::cin >> conteudoTweet;
-            Tweet novoTweet = *new Tweet(usuarioLogado, conteudoTweet);
+            Tweet novoTweet = *new Tweet(conteudoTweet);
             usuarioLogado.addTweet(novoTweet);
 
         } else if (opcaoDigitada == "2") {
             std::system("clear");
-            this->feedUsuarioLogado.popularFeed(this->usuarioLogado);
+            this->feedUsuarioLogado.popularFeed(this->usuarioLogado, this->listaUsuariosGeral);
             std::cout << "Pressione qualquer tecla para voltar" << std::endl;
             std::cin >>opcaoDigitada;
 

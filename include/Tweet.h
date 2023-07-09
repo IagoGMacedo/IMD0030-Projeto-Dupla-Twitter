@@ -10,38 +10,54 @@ class Usuario;
 
 class Tweet{
     private:
-        Usuario *autorTweet;
+        // Usuario *autorTweet;
+
+        //apenas testando!
+        std::string nomeUsuarioAutor;
+        std::string nomePerfilAutor;
+        std::string emailAutor;
+
         std::string conteudoTweet;
         int qntdCurtidas;
-        std::map<std::string, Usuario> listaCurtidas;
-        std::vector<Tweet*> listaComentarios;
+        int qntdComentarios;
+
+        //std::map<std::string, Usuario> listaCurtidas;
+        std::vector<std::string> listaCurtidas;
+
+        //listaComentarios pode ser um hash com o email
+        std::vector<Tweet> listaComentarios;
 
     public:
         //Construtores e destrutor
-        Tweet(Usuario autorTweet,  std::string conteudoTweet);
+        Tweet(std::string conteudoTweet);
+        Tweet(std::string conteudoTweet, std::string nomeUsuarioAutor, std::string nomePerfilAutor, std::string emailAutor);
+        // Tweet(Usuario autorTweet,  std::string conteudoTweet);
         Tweet(void);
         ~Tweet(void);
         friend std::ostream& operator << (std::ostream &o, Tweet &tweet);
         bool operator == (Tweet &t);
 
         //Getters
-        Usuario getAutorTweet();
+        //Usuario getAutorTweet();
         std::string getConteudoTweet();
         int getQntdCurtidas();
-        std::map<std::string, Usuario> getListaCurtidas();
-        std::vector<Tweet*> getListaComentarios();
+        //std::map<std::string, Usuario> getListaCurtidas();
+        std::vector<Tweet> getListaComentarios();
+        int getQntdComentarios();
+
 
         //Setters
-        void setAutorTweet(Usuario autorTweet);
+        //void setAutorTweet(Usuario autorTweet);
         void setConteudoTweet(std::string conteudoTweet);
         void setQntdCurtidas(int qntdCurtidas);
         void setListaCurtidas(std::map<std::string, Usuario> listaCurtidas);
-        void setListaComentarios(std::vector<Tweet*>);
+        void setListaComentarios(std::vector<Tweet>);
+        void setQntdComentarios(int qntdComentarios);
         
         //Outros metodos
-        void curtirTweet(Usuario user);
+        void curtirTweet(std::string emailUsuario);
         void descurtirTweet(Usuario user);
-        void comentarTweet(Tweet *comentario);
+        void comentarTweet(Tweet comentario);
         std::string printarTweet();
         
 
