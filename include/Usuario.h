@@ -15,10 +15,6 @@ private:
     std::string nomeUsuario;
     std::string senhaUsuario;
     std::string emailUsuario;
-
-    int qntdSeguidores;
-    int qntdSeguindo;
-    int qntdTweets;
     
     std::vector<Tweet> listaTweets;
     std::map<std::string, Usuario> listaSeguindo;
@@ -48,21 +44,21 @@ public:
     //Setters
     void setNomePerfil(std::string nomePerfil);
     void setListaTweets(std::vector<Tweet> listaTweets);
-    void setQntdSeguidores(int qntdSeguidores);
-    void setQntdSeguindo(int qntdSeguindo);
     void setListaSeguindo(std::map<std::string, Usuario> listaSeguindo);
     void setListaSeguidores(std::map<std::string, Usuario> listaSeguidos);
     void setListaBloqueados(std::map<std::string, Usuario> listaBloqueados);
     void setEmailUsuario(std::string emailUsuario);
     void setNomeUsuario(std::string nomeUsuario);
-    void setQntdTweets(int novaQuantidade);
+    bool updtListaSeguidores(Usuario, std::string);
+    bool updtListaSeguindo(Usuario, std::string);
+    bool updtListaBloqueados(Usuario, std::string);
 
     //Outros Metodos
-    void deletarUsuario(std::string confirmacao);
-    void seguirUsuario(Usuario user, Usuario ownner);
-    void deixarDeSeguir(Usuario user, Usuario ownner);
-    void bloquearUsuario(Usuario user);
-    void desbloquearUsuario(Usuario user);
+    bool deletarUsuario(std::string confirmacao);
+    bool seguirUsuario(Usuario *user, Usuario ownner);
+    bool deixarDeSeguir(Usuario user, Usuario ownner);
+    bool bloquearUsuario(Usuario user);
+    bool desbloquearUsuario(Usuario user);
     void addTweet(Tweet novoTweet);
     bool conferirSenha(std::string senhaDigitada);
     

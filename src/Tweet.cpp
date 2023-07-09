@@ -38,9 +38,12 @@ Tweet::~Tweet(void) {
 }
 
 std::ostream& operator << (std::ostream &out, Tweet &post) {
-    out << post.getConteudoTweet() << "\n"
-    << "👍" << post.getQntdCurtidas() /*<< post.getListaComentarios().getTamanho()*/
-    << std::endl;
+    out << post.nomeUsuarioAutor << " @" << post.nomePerfilAutor << std::endl
+    << "------------------------------------------\n"
+    << post.getConteudoTweet() << "\n"
+    << "------------------------------------------\n"
+    << "🗨️ " << post.getQntdComentarios() << " ❤️ " << post.getQntdCurtidas() << std::endl;
+
     return out;
 };
 
@@ -57,10 +60,13 @@ std::string Tweet::getConteudoTweet() {
     return this->conteudoTweet;
 }
 int Tweet::getQntdCurtidas() {
-    return this->qntdCurtidas;
+    return this->listaCurtidas.size();
 }
 int Tweet::getQntdComentarios() {
-    return this->qntdComentarios;
+    return this->listaComentarios.size();
+}
+int Tweet::getQntdReTweets() {
+    return this->listaReTweets.size();
 }
 std::vector<Tweet> Tweet::getListaComentarios(){
     return this->listaComentarios;
@@ -128,5 +134,15 @@ std::string Tweet::printarTweet(){
 
 }
 
+bool Tweet::reTweet(std::string emailUsuario) {
+    auto jaReTweetou = std::find(this->listaReTweets.begin(), this->listaReTweets.end(), emailUsuario);
+    if (jaReTweetou != this->listaReTweets.end()) {
+        return false;
+    } else{
+        this->listaReTweets.insert(this->listaReTweets.begin(), emailUsuario);
+    }
+
+    return true;
+}
 
 

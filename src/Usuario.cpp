@@ -1,13 +1,8 @@
 #include <iostream>
 #include "../include/Usuario.h"
-//#include "../include/Tweet.h"
-//#include "../include/std::vector.h"
 
-//#include "../include/ListaEncad.h"
 
 //Construtores e destrutor
-
-
 Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string emailUsuario, std::string senhaUsuario){
     this->nomePerfil = nomePerfil;
     this->nomeUsuario = nomeUsuario;
@@ -36,8 +31,7 @@ std::ostream& operator<< (std::ostream &o, Usuario &user){
     int i = 0;
     o << user.getNomeUsuario() << "\n"
     << "@" << user.getNomePerfil() << "\n"
-    << user.getQntdSeguindo() << " Seguindo" << user.getQntdSeguidores() << " Seguidores\n"; 
-    //<< user.getListaTweets()[i];
+    << user.getQntdSeguindo() << " Seguindo | " << user.getQntdSeguidores() << " Seguidores\n"; 
 
     return o;
 };
@@ -54,18 +48,9 @@ bool Usuario::operator== (Usuario &u){
 //Setters
 void Usuario::setNomePerfil(std::string nomePerfil) {
     this->nomePerfil = nomePerfil;
-};  
+}
 void Usuario::setListaTweets(std::vector<Tweet> listaTweets) {
     this->listaTweets = listaTweets;
-}
-void Usuario::setQntdSeguidores(int qntdSeguidores) {
-    this->qntdSeguidores = qntdSeguidores;
-}
-void Usuario::setQntdSeguindo(int qntdSeguindo) {
-    this->qntdSeguindo = qntdSeguindo;
-}
-void Usuario::setQntdTweets(int novaQuantidade){
-    this->qntdTweets = novaQuantidade;
 }
 void Usuario::setListaSeguindo(std::map<std::string, Usuario> listaSeguindo) {
     this->listaSeguindo = listaSeguindo;
@@ -91,6 +76,15 @@ std::string Usuario::getNomePerfil() {
 std::vector<Tweet> Usuario::getListaTweets() {
     return this->listaTweets;
 }
+int Usuario::getQntdSeguidores() {
+    return this->listaSeguidores.size();
+}
+int Usuario::getQntdSeguindo() {
+    return this->listaSeguindo.size();
+}
+int Usuario::getQntdTweets() {
+    return this->listaTweets.size();
+}
 std::map<std::string, Usuario> Usuario::getListaSeguidores() {
     return this->listaSeguidores;
 }
@@ -100,17 +94,6 @@ std::map<std::string, Usuario> Usuario::getListaSeguindo(){
 std::map<std::string, Usuario> Usuario::getListaBloqueados() {
     return this->listaBloqueados;
 }
-int Usuario::getQntdSeguidores() {
-    return this->qntdSeguidores;
-}
-int Usuario::getQntdSeguindo() {
-    return this->qntdSeguindo;
-}
-
-int Usuario::getQntdTweets(){
-    return this->qntdTweets;
-}
-
 std::string Usuario::getEmailUsuario() {
     return this->emailUsuario;
 }
@@ -118,70 +101,110 @@ std::string Usuario::getNomeUsuario() {
     return this->nomeUsuario;
 }
 
+//Updaters
+bool Usuario::updtListaSeguidores(Usuario user, std::string s) {
+    auto iter = this->listaSeguidores.find(user.getEmailUsuario());
+    if (s == "+" && iter == this->listaSeguidores.end()) {
+        this->listaSeguidores.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
+        return true;
+    } 
+    else if (s == "-" && iter != this->listaSeguidores.end()) {
+        this->listaSeguidores.erase(user.getEmailUsuario());
+        return true;
+    }
+
+    return false;
+}
+
+bool Usuario::updtListaSeguindo(Usuario user, std::string s) {
+    auto iter = this->listaSeguindo.find(user.getEmailUsuario());
+    if (s == "+" && iter == this->listaSeguindo.end()) {
+        this->listaSeguindo.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
+        return true;
+    } 
+    else if (s == "-" && iter != this->listaSeguindo.end()) {
+        this->listaSeguindo.erase(user.getEmailUsuario());
+        return true;
+    }
+
+    return false;
+}
+
+bool Usuario::updtListaBloqueados(Usuario user, std::string s) {
+    auto iter = this->listaBloqueados.find(user.getEmailUsuario());
+    if (s == "+" && iter == this->listaBloqueados.end()) {
+        this->listaBloqueados.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
+        return true;
+    } else if (s == "-" && iter != this->listaBloqueados.end()) {
+        this->listaBloqueados.erase(user.getEmailUsuario());
+        return true;
+    }
+
+    return false;
+}
 
 //Outros Metodos
-void Usuario::deletarUsuario(std::string confirmacao) {
+bool Usuario::deletarUsuario(std::string confirmacao) {
     if (confirmacao == this->getNomePerfil()) {
         this->~Usuario();
+        return true;
     }
+
+    return false;
 }
 // user = o outro usuario
 // owner = eu
-void Usuario::seguirUsuario(Usuario user, Usuario ownner) {
-    std::pair<std::string, Usuario> par_user = * new std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
-    std::pair<std::string, Usuario> par_ownner = * new std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
-
-    if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
-        throw "Usuario já seguido";
-    }else{
-    this->listaSeguindo.insert(par_user);
-    this->qntdSeguindo++;
-    
-    user.listaSeguidores.insert(par_ownner);
-    user.qntdSeguidores++;
+bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
+    if (this->listaSeguindo.find(user->getEmailUsuario()) != this->listaSeguindo.end()) {
+        return false;
     }
     
+    this->updtListaSeguindo(*user, "+");
+    user->updtListaSeguidores(ownner, "+");
+    
+    return true;
 }
 
-void Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
-    std::pair<std::string, Usuario> par_user = std::pair<std::string, Usuario>(user.getEmailUsuario(), user);
-    std::pair<std::string, Usuario> par_ownner = std::pair<std::string, Usuario>(ownner.getEmailUsuario(), ownner);
-
+bool Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
     if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
-        throw "Usuario não seguido";
+        return false;
     }
     
-    this->listaSeguindo.insert(par_user);
-    this->qntdSeguindo--;
+    this->updtListaSeguindo(user, "-");
+    user.updtListaSeguidores(ownner, "-");
     
-    user.listaSeguidores.insert(par_ownner);
-    user.qntdSeguidores--;
+    return true;
 }
 
-void Usuario::bloquearUsuario(Usuario user){
-    if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
-        throw "Usuario já bloqueado";
+bool Usuario::bloquearUsuario(Usuario user){
+    if (this->listaBloqueados.find(user.getEmailUsuario()) != this->listaBloqueados.end()) {
+        return false;
     }
-    this->listaBloqueados.insert(std::pair<std::string, Usuario>(user.getEmailUsuario(), user));
+
+    this->updtListaBloqueados(user, "+");
+
+    return true;
 }
 
-void Usuario::desbloquearUsuario(Usuario user){
-    if (this->listaSeguindo.find(user.getEmailUsuario()) == this->listaSeguindo.end()) {
-        throw "Usuario não bloqueado";
+bool Usuario::desbloquearUsuario(Usuario user){
+    if (this->listaBloqueados.find(user.getEmailUsuario()) != this->listaBloqueados.end()) {
+        return false;
     }
-    this->listaBloqueados.erase(user.getEmailUsuario());
+
+    this->updtListaBloqueados(user, "-");
+
+    return true;
 }
 
 
 void Usuario::addTweet(Tweet novoTweet){
-    this->listaTweets.insert(this->listaTweets.begin(), novoTweet) ;
-    this->qntdTweets++;
+    this->listaTweets.insert(this->listaTweets.begin(), novoTweet);
 }
 
 bool Usuario::conferirSenha(std::string senhaDigitada){
     if(senhaDigitada == this->senhaUsuario){
         return true;
     }
+
     return false;
 }
-

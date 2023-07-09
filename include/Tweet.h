@@ -27,6 +27,9 @@ class Tweet{
         //listaComentarios pode ser um hash com o email
         std::vector<Tweet> listaComentarios;
 
+        //lista de reTweets
+        std::vector<std::string>listaReTweets;
+
     public:
         //Construtores e destrutor
         Tweet(std::string conteudoTweet);
@@ -41,6 +44,7 @@ class Tweet{
         //Usuario getAutorTweet();
         std::string getConteudoTweet();
         int getQntdCurtidas();
+        int getQntdReTweets();
         //std::map<std::string, Usuario> getListaCurtidas();
         std::vector<Tweet> getListaComentarios();
         int getQntdComentarios();
@@ -56,8 +60,9 @@ class Tweet{
         
         //Outros metodos
         void curtirTweet(std::string emailUsuario);
-        void descurtirTweet(Usuario user);
+        bool descurtirTweet(Usuario user);
         void comentarTweet(Tweet comentario);
+        bool reTweet(std::string emailUsuario);
         std::string printarTweet();
         
 

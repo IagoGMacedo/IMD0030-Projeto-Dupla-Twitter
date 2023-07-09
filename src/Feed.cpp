@@ -26,8 +26,10 @@ void Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuario
             if(iterator->second.getListaTweets().size() > 0){
                 std::vector<Tweet> listaTweets = iterator->second.getListaTweets();
                 //printando cada um  dos tweets
-                for(int i =0;i<listaTweets.size();i++){
-                        std::cout << listaTweets.at(i).printarTweet() << std::endl;
+                for(int i = 0; i < listaTweets.size(); i++){
+                    std::cout << listaTweets.at(i).printarTweet() << std::endl;
+                    //Teste de sobrecarga de saída
+                    std::cout << "\nTESTE SOBRECARGA:\n" << listaTweets.at(i) << std::endl;
                 }
             }
             

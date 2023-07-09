@@ -188,40 +188,42 @@ void Controlador::registrar(){
 
 //função só pra gente testar outros metodos
 void Controlador::fazerTestes(){
-   Usuario usuarioIago = * new Usuario("iago", "iagola", "iagognobre@gmail.com", "123456");
-   Usuario usuarioGilberto = * new Usuario("gilberto", "gilbertin", "gilberto@gmail.com", "123456");
+    Usuario usuarioIago = * new Usuario("iago", "iagola", "iagognobre@gmail.com", "123456");
+    Usuario usuarioGilberto = * new Usuario("gilberto", "gilbertin", "gilberto@gmail.com", "123456");
 
     //colocando no map
-   this->listaUsuariosGeral.insert({usuarioIago.getEmailUsuario(), usuarioIago});
-   this->listaUsuariosGeral.insert({usuarioGilberto.getEmailUsuario(), usuarioGilberto});
+    this->listaUsuariosGeral.insert({usuarioIago.getEmailUsuario(), usuarioIago});
+    this->listaUsuariosGeral.insert({usuarioGilberto.getEmailUsuario(), usuarioGilberto});
 
+    //criando tweets
+    Tweet tweetIago = * new Tweet("chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
+    Tweet tweetGilberto = * new Tweet("ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
 
-   //criando tweets
-   Tweet tweetIago = * new Tweet("chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
-   Tweet tweetGilberto = * new Tweet("ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+    Tweet tweetRespostaGilberto = * new Tweet("pois eu vou fazer uma prece",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
 
-   Tweet tweetRespostaGilberto = * new Tweet("pois eu vou fazer uma prece",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+    tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
+    tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
 
-   tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
-   tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
-
-   //tentando incluir comentarios em um determinado tweet
+    //tentando incluir comentarios em um determinado tweet
     tweetIago.comentarTweet(tweetRespostaGilberto);
 
-   //adicionando tweets
-   usuarioIago.addTweet(tweetIago);
-   usuarioGilberto.addTweet(tweetGilberto);
-   usuarioGilberto.addTweet(tweetRespostaGilberto);
+    //adicionando tweets
+    usuarioIago.addTweet(tweetIago);
+    usuarioGilberto.addTweet(tweetGilberto);
+    usuarioGilberto.addTweet(tweetRespostaGilberto);
 
     //seguindo outro usuario 
-    usuarioIago.seguirUsuario(usuarioGilberto, usuarioIago);
-    usuarioGilberto.seguirUsuario(usuarioIago, usuarioGilberto);
+    bool seguir1 = usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
+    bool seguir2 = usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
+
+    std::cout << "DEBUG:\n" << seguir1 << "\n" << usuarioGilberto << std::endl << std::endl;
+    std::cout << "DEBUG:\n" << seguir2 << "\n" << usuarioIago << std::endl << std::endl;
 
     //tentando printar as respostas
     if(tweetIago.getQntdComentarios() > 0){
         std::cout << "printando respostas: " << std::endl;
         std::vector<Tweet> listaComentarios = tweetIago.getListaComentarios();
-        for(int i =0;i<listaComentarios.size();i++){
+        for(int i=0; i<listaComentarios.size(); i++){
             std::cout << listaComentarios.at(i).printarTweet();
         }
     }
@@ -242,9 +244,9 @@ void Controlador::fazerTestes(){
 
 int main(){
     Controlador controlador = * new Controlador();
-    controlador.iniciarPrograma();
+    //controlador.iniciarPrograma();
 
-    //ontrolador.fazerTestes();
+    controlador.fazerTestes();
     return 0;
 }
 
@@ -314,7 +316,7 @@ void Controlador::iniciarSessao(){
                         }
 
                         else if (opcaoDigitada1 == "2") { 
-                            usuarioLogado.seguirUsuario(user.second, usuarioLogado);
+                            usuarioLogado.seguirUsuario(&user.second, usuarioLogado);
                         }
 
                         else if (opcaoDigitada1 == "3") { 
@@ -337,7 +339,6 @@ void Controlador::iniciarSessao(){
                 }
             }
             
-            //OperarTweet
         }
 
         
