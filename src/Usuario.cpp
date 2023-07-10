@@ -13,7 +13,6 @@ Usuario::Usuario(std::string nomeUsuario, std::string nomePerfil, std::string em
     this->listaSeguindo = * new std::map<std::string, Usuario>();
     this->listaSeguidores = * new std::map<std::string, Usuario>();
     this->listaBloqueados = * new std::map<std::string, Usuario>();
-
 }
 
 
@@ -29,9 +28,9 @@ Usuario::~Usuario() {
 
 std::ostream& operator<< (std::ostream &o, Usuario &user){
     int i = 0;
-    o << user.getNomeUsuario() << "\n"
-    << "@" << user.getNomePerfil() << "\n"
-    << user.getQntdSeguindo() << " Seguindo | " << user.getQntdSeguidores() << " Seguidores\n"; 
+    o << user.getNomePerfil() << "\n"
+    << "@" << user.getNomeUsuario() << "\n"
+    << user.getQntdSeguindo() << " Seguindo | " << user.getQntdSeguidores() << " Seguidores | "<< user.getQntdTweets() <<" Tweets \n"; 
 
     return o;
 };
@@ -139,7 +138,6 @@ bool Usuario::updtListaBloqueados(Usuario user, std::string s) {
         this->listaBloqueados.erase(user.getEmailUsuario());
         return true;
     }
-
     return false;
 }
 
@@ -149,7 +147,6 @@ bool Usuario::deletarUsuario(std::string confirmacao) {
         this->~Usuario();
         return true;
     }
-
     return false;
 }
 // user = o outro usuario
@@ -158,10 +155,10 @@ bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
     if (this->listaSeguindo.find(user->getEmailUsuario()) != this->listaSeguindo.end()) {
         return false;
     }
-    
     this->updtListaSeguindo(*user, "+");
+    this->setNomePerfil("baitola");
     user->updtListaSeguidores(ownner, "+");
-    
+    user->setNomePerfil("baitola");
     return true;
 }
 
@@ -169,10 +166,8 @@ bool Usuario::deixarDeSeguir(Usuario user, Usuario ownner) {
     if (this->listaSeguindo.find(user.getEmailUsuario()) != this->listaSeguindo.end()) {
         return false;
     }
-    
     this->updtListaSeguindo(user, "-");
     user.updtListaSeguidores(ownner, "-");
-    
     return true;
 }
 

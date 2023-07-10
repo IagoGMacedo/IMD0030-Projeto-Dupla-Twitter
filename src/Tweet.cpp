@@ -38,12 +38,11 @@ Tweet::~Tweet(void) {
 }
 
 std::ostream& operator << (std::ostream &out, Tweet &post) {
-    out << post.nomeUsuarioAutor << " @" << post.nomePerfilAutor << std::endl
+    out << post.nomePerfilAutor  << " @" <<  post.nomeUsuarioAutor << std::endl
     << "------------------------------------------\n"
     << post.getConteudoTweet() << "\n"
     << "------------------------------------------\n"
     << "🗨️ " << post.getQntdComentarios() << " ❤️ " << post.getQntdCurtidas() << std::endl;
-
     return out;
 };
 

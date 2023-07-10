@@ -15,7 +15,7 @@ class Feed {
         Feed();
         ~Feed();
         void popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral);
-
-    
+        void popularProprioFeed(Usuario user);
+        void percorrerFeed(Usuario *user, Usuario ownner);
 };
 #endif

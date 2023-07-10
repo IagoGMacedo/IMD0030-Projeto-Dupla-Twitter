@@ -21,6 +21,7 @@ class Controlador{
         Controlador();
         ~Controlador();
         void fazerTestes();
+        void visualizarOutroPerfil(Usuario *user);
 };
 
 #endif
