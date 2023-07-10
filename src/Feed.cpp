@@ -10,12 +10,14 @@ Feed::~Feed(){
 
 }
 
-void Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral){
+std::vector<Tweet> Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral){
     //Exibir posts de usuarios que está seguindo
+    std::vector<Tweet> listaTweetsFeed = * new std::vector<Tweet>;
     std::map<std::string, Usuario> mapSeguindo;
     if(user.getListaSeguindo().size() > 0){
         mapSeguindo = user.getListaSeguindo();
     } else{
+        //se ele não seguir ninguem ele vai tipo ver os tweets gerais da plataforma, tem que melhorar isso depois
         mapSeguindo = listaUsuariosGeral;
     }
     if(mapSeguindo.size() > 0){
@@ -27,7 +29,8 @@ void Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuario
                     std::vector<Tweet> listaTweets = iterator->second.getListaTweets();
                     //printando cada um  dos tweets
                     for(int i = 0; i < listaTweets.size(); i++){
-                        std::cout << listaTweets.at(i) << std::endl;
+                        listaTweetsFeed.insert(listaTweetsFeed.begin(), listaTweets.at(i));
+                        //std::cout << listaTweets.at(i) << std::endl;
                     }
                 }
             }
@@ -35,7 +38,7 @@ void Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuario
     } else{
         std::cout << "ainda não foi visto nenhum tweet "<<std::endl;
     }
-
+    return listaTweetsFeed;
 }
 
 void Feed::popularProprioFeed(Usuario user){
@@ -51,20 +54,18 @@ void Feed::popularProprioFeed(Usuario user){
     }
 }
 
-void Feed::percorrerFeed(Usuario *user, Usuario ownner){
+void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
     std::string opcaoDigitada;
     int indiceTarget = 0;
     while( opcaoDigitada!="l"){
-        if(opcaoDigitada=="s" && indiceTarget+1<user->getQntdTweets()){
+        if(opcaoDigitada=="s" && indiceTarget+1<vetorPercorrendo->size()){
             indiceTarget++;
         }
         if(opcaoDigitada=="w" && indiceTarget>0){
             indiceTarget--;
         }
         if(opcaoDigitada=="j"){
-            std::vector<Tweet> listaRecuperada = user->getListaTweets();
-            listaRecuperada[indiceTarget].curtirTweet(ownner.getEmailUsuario());
-            user->setListaTweets(listaRecuperada);
+            vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
         }
         if(opcaoDigitada=="k"){
             std::system("clear");
@@ -73,17 +74,15 @@ void Feed::percorrerFeed(Usuario *user, Usuario ownner){
             std::cin.ignore();
             std::cin.getline(conteudoTweet, 280);
             Tweet novoTweet = * new Tweet(conteudoTweet, ownner.getNomeUsuario(), ownner.getNomePerfil(), ownner.getEmailUsuario());
-            std::vector<Tweet> listaRecuperada = user->getListaTweets();
-            listaRecuperada[indiceTarget].comentarTweet(novoTweet);
-            user->setListaTweets(listaRecuperada);
+            vetorPercorrendo->at(indiceTarget).comentarTweet(novoTweet);
         }
         
         std::system("clear");
-        for (int i = 0; i < user->getQntdTweets(); i++) {
+        for (int i = 0; i < vetorPercorrendo->size(); i++) {
             if(i==indiceTarget){
                 std::cout << "➡️";
             }
-            std::cout << user->getListaTweets()[i] << std::endl;
+            std::cout << vetorPercorrendo->at(i) << std::endl;
         }
         /*
          std::cout << "\nO que deseja fazer??\n" 

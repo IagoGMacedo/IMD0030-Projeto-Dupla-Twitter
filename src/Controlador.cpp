@@ -306,13 +306,21 @@ void Controlador::iniciarSessao(){
             std::cin >> teste;
         } else if (opcaoDigitada == "2") {
             std::system("clear");
-            this->feedUsuarioLogado.popularFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), this->listaUsuariosGeral);
+            //ainda não tá funcionando, vai ter que ser uma função especifica.
+            std::vector<Tweet> listaTweetsFeed = this->feedUsuarioLogado.popularFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), this->listaUsuariosGeral);
+            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), &listaTweetsFeed);
             std::cout << "Pressione qualquer tecla para voltar" << std::endl;
             std::cin >>opcaoDigitada;
 
         } else if(opcaoDigitada == "3"){
             std::system("clear");
-            this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
+            //this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
+            
+            //aplicando percorrerFeed no contexto de feed de um outro usuário.
+            std::vector<Tweet> listaTweets = this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getListaTweets();
+            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
+            this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).setListaTweets(listaTweets);
+
             std::cout << "Pressione qualquer tecla para voltar" << std::endl;
             std::cin >>opcaoDigitada;
         } else if(opcaoDigitada == "4"){
@@ -354,7 +362,10 @@ void Controlador::visualizarOutroPerfil(Usuario *user){
         std::cin >> opcaoDigitada1;
 
         if (opcaoDigitada1 == "1") { 
-            this->feedUsuarioLogado.percorrerFeed(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
+            //aplicando percorrerFeed no contexto de feed de um outro usuário.
+            std::vector<Tweet> listaTweets = user->getListaTweets();
+            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
+            user->setListaTweets(listaTweets);
         }
 
         else if (opcaoDigitada1 == "2") { 

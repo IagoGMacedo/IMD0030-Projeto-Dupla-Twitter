@@ -14,8 +14,8 @@ class Feed {
     public:
         Feed();
         ~Feed();
-        void popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral);
+        std::vector<Tweet> popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral);
         void popularProprioFeed(Usuario user);
-        void percorrerFeed(Usuario *user, Usuario ownner);
+        void percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo);
 };
 #endif

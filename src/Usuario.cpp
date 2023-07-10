@@ -156,9 +156,7 @@ bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
         return false;
     }
     this->updtListaSeguindo(*user, "+");
-    this->setNomePerfil("baitola");
     user->updtListaSeguidores(ownner, "+");
-    user->setNomePerfil("baitola");
     return true;
 }
 
