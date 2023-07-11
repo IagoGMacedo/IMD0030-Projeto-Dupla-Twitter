@@ -78,7 +78,11 @@ void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
         }
         /**< Curtir o tweet*/
         if(opcaoDigitada=="l"){
-            vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
+            if(vetorPercorrendo->at(indiceTarget).usuarioJacurtiu(ownner.getEmailUsuario())){
+                vetorPercorrendo->at(indiceTarget).descurtirTweet(ownner.getEmailUsuario());
+            } else{
+                vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
+            }
         }
         /**< Comentar Tweet*/
         if(opcaoDigitada=="c"){
