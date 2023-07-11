@@ -47,6 +47,7 @@ class Tweet{
         std::string getNomePerfilAutor();
         std::string getEmailAutor();
         std::vector<Tweet> getListaComentarios();
+        std::vector<std::string> getListaCurtida();
         int getQntdComentarios();
 
 
@@ -64,6 +65,7 @@ class Tweet{
         bool reTweet(std::string emailUsuario);
         std::string printarTweet();
         std::vector<Tweet*> getListaComentariosPonteiros();
+        bool usuarioJacurtiu(std::string emailUsuario);
         
 
 };

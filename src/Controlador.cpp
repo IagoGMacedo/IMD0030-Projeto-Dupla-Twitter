@@ -291,10 +291,10 @@ void Controlador::visualizarOutroPerfil(Usuario *user){
             seguir = "[2] Deixar de seguir Usuario\n" ;
             this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).seguirUsuario(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
         }
-
+        
         else if (opcaoDigitada1 == "2" && usuarioLogado.getListaSeguindo().find(user->getEmailUsuario()) != usuarioLogado.getListaSeguindo().end()) { 
             seguir = "[2] Seguir Usuario\n" ;
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).deixarDeSeguir(*user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
+            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).deixarDeSeguir(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
         }
         /**< Encerrar loop*/
         else if (opcaoDigitada1 == "3") { 
