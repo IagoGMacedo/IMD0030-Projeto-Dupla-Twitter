@@ -1,8 +1,6 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include "../include/Helper.h"
-#include "../include/ListaEncad.h"
 //#include "../include/std::vector.h"
 #include "../include/Tweet.h"
 #include <iostream>

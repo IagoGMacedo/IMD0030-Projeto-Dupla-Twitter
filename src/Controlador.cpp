@@ -7,17 +7,6 @@
 #include "../include/Controlador.h"
 #define USERS_FILE "../data/Users.dat"
 
-/*
-    ideias
-    pode fazer os codigos de input e output aqui local e só passar as infos pra classe OU
-    fazer tudo no metodo da classe mesmo (fazerLogin e registrar)
-    Usuario
-
-    Utilizar arquivo em binário para salvar os dados de usuários
-    usar o arquivo em formato txt para os testes
-
-    talvez usar um hashmap ao inves de vector de usuario.
-*/
 
 Controlador::Controlador() {
     this->listaUsuariosGeral = * new std::map<std::string, Usuario>();
@@ -28,42 +17,27 @@ Controlador::Controlador() {
 Controlador::~Controlador() {
 }
 
+int main(){
+    Controlador controlador = * new Controlador();
+    controlador.iniciarPrograma();
 
-void lerListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
-    std::fstream arquivoEmpregados;
-    std::map<std::string, Usuario> vetorUsuariosRecuperados = * new std::map<std::string, Usuario>;
-    arquivoEmpregados.open(USERS_FILE, std::ios::in | std::ios::binary);
-    if(arquivoEmpregados.is_open()){
-        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(listaUsuarios));
-        for(auto i : vetorUsuariosRecuperados){
-            std::cout << i.second.getNomeUsuario() << std::endl;
-        }
-        std::cout << "programa feito com sucesso" << std::endl;
-        
-    }
-    arquivoEmpregados.close();
+    //controlador.fazerTestes();
+    return 0;
 }
-
-void salvarListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
-    std::fstream arquivoUsuarios;
-    arquivoUsuarios.open(USERS_FILE, std::ios::out | std::ios::binary);
-    if(arquivoUsuarios.is_open()){
-        arquivoUsuarios.write((char*)&listaUsuarios,sizeof(listaUsuarios));
-        std::cout << "arquivo salvo com sucesso" << std::endl;
-        arquivoUsuarios.close();
-    }
-}
-
 
 void Controlador::iniciarPrograma(){
     std::string stringEntrada;
     std::system("clear");
     Usuario usuarioIago = * new Usuario("iagola", "iago", "iagognobre@gmail.com", "87020586");
     Usuario usuarioGilberto = * new Usuario("gilbertin","gilberto","gilberto@gmail.com", "87020586");
+    Usuario usuarioGabriel= * new Usuario("gabrielzin","gabriel","gabriel@gmail.com", "87020586");
+
 
     //botando isso aqui pra facilitar testes, tirar depois
     this->listaUsuariosGeral.insert({usuarioIago.getEmailUsuario(),usuarioIago});
     this->listaUsuariosGeral.insert({usuarioGilberto.getEmailUsuario(), usuarioGilberto});
+    this->listaUsuariosGeral.insert({usuarioGabriel.getEmailUsuario(), usuarioGabriel});
+
 
 
     bool encerrarPrograma = false;
@@ -74,11 +48,8 @@ void Controlador::iniciarPrograma(){
         std::cout << "[2] Registre-se" << std::endl;
         std::cout << "[3] Encerrar programa" << std::endl;
         std::cin >> stringEntrada;
-        //std::system("clear");
-
         if(stringEntrada.length() > 1)
             stringEntrada = "0";
-
         switch(stringEntrada[0]){
             case '1':
                 this->fazerLogin();
@@ -95,9 +66,7 @@ void Controlador::iniciarPrograma(){
             break;
         }
         std::system("clear");
-        //std::cout << "digitado: ," <<stringEntrada<<"," <<std::endl;
     }
-    
 }
 
 void Controlador::fazerLogin(){
@@ -126,41 +95,7 @@ void Controlador::fazerLogin(){
     }
     std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
-    
-        /*
-    ifstream file(USERS_FILE);
-    if (!file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo" << std::endl;
-    }
-    else {
-        //Inserção do conjunto de Usuarios no arquivo
-        std::string line;
-        while (file.getline(file, line.c_str())) {
-            listaUsuariosGeral.inserir(line);
-        }
-        file.close();
-        */
-
-    }
-
-    //Compara com o arquivo txt ou bin para ver se o login coincide
-    //Se sim, popularFeed(Usuario)
-    /*
-    bool encontrado = buscarUsuario(USERS_FILE);
-    if (encontrado) {
-        std::cout << "Fazendo login" << std::endl;
-        std::system(clear);
-        this->feedUsuarioLogado.popularFeed();
-    }
-    */
-    /*Se não chamar o fazer login novamente, e exibir mensagem de login ou senha incorretos
-    else {
-        std::cout << "Login ou senha incorretos" << std::endl;
-        return fazerLogin();
-    }
 }
-
-    */
 
 void Controlador::registrar(){ 
     bool nomeUsuarioRepetido = false;
@@ -203,6 +138,185 @@ void Controlador::registrar(){
     std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
 }
+
+
+void Controlador::iniciarSessao(){
+    std::string opcaoDigitada;
+    while(opcaoDigitada!="5"){
+        std::system("clear");
+        std::cout << this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()) << std::endl;
+        std::cout << "\nSeja bem vindo," << this->usuarioLogado.getNomeUsuario() << std::endl;
+        std::cout << "O que deseja fazer??" << std::endl;
+        std::cout << "[1] Escrever Tweet" << std::endl;
+        std::cout << "[2] Acessar Feed" << std::endl;
+        std::cout << "[3] Meus Tweets" << std::endl;
+        std::cout << "[4] Pesquisar Usuário" << std::endl;
+        std::cout << "[5] Encerrar Sessão" << std::endl;
+        std::cin >>opcaoDigitada;
+
+        if (opcaoDigitada == "1") {
+            std::system("clear");
+            char conteudoTweet[280] = {0};
+            std::string teste;
+            std::cout << "O que está pensando? " << std::endl;
+            std::cin.ignore();
+            std::cin.getline(conteudoTweet, 280);
+            Tweet novoTweet = *new Tweet(conteudoTweet, this->usuarioLogado.getNomeUsuario(), this->usuarioLogado.getNomePerfil(), this->usuarioLogado.getEmailUsuario());
+            this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).addTweet(novoTweet);
+            //this->usuarioLogado.addTweet(novoTweet);
+
+            std::vector<Tweet> listaComentarios = this->usuarioLogado.getListaTweets();
+            for(int i=0; i<listaComentarios.size(); i++){
+                std::cout << listaComentarios.at(i);
+            }
+
+            std::cout <<"Tweet adicionado com sucesso, aperte qualquer tecla para voltar" << std::endl;
+            std::cin >> teste;
+        } else if (opcaoDigitada == "2") {
+            std::system("clear");
+            this->feedUsuarioLogado.percorrerFeedGeral(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()),&this->listaUsuariosGeral);
+            //tentando primeiro só com o ponteiro!
+        } else if(opcaoDigitada == "3"){
+            std::system("clear");
+            //this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
+            
+            //aplicando percorrerFeed no contexto de feed de um outro usuário.
+            if(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getQntdTweets()>0){
+                std::vector<Tweet> listaTweets = this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getListaTweets();
+                this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
+                this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).setListaTweets(listaTweets);
+           
+            } else{
+                std::string qualquerTecla;
+                std::cout << "Você ainda não escreveu nenhum Tweet. Aperte qualquer tecla para voltar" <<std::endl;
+                std::cin >> qualquerTecla;
+            }
+            //this->feedUsuarioLogado.percorrerFeedGeral(&this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()),&this->listaUsuariosGeral);
+            // std::cout << "Pressione qualquer tecla para voltar" << std::endl;
+            // std::cin >>opcaoDigitada;
+        } else if(opcaoDigitada == "4"){
+            bool achouPerfil = false;
+            std::string userName;
+            std::cout << "Insira o nome do usuário que deseja pesquisar: " << std::endl;
+            std::cin >> userName;
+
+            for (auto user : this->listaUsuariosGeral) {
+                if (user.second.getNomeUsuario() == userName) {
+                    achouPerfil = true;
+                    this->visualizarOutroPerfil(&this->listaUsuariosGeral.at(user.second.getEmailUsuario()));
+                }
+            }
+            if(!achouPerfil){
+                std::cout << "Não foi encontrado nenhum usuário com esse nome" <<std::endl;
+                std::cout << "Pressione qualquer tecla para voltar" << std::endl;
+                std::cin >>opcaoDigitada;
+            }
+            // std::cout << "Pressione qualquer tecla para voltar" << std::endl;
+            // std::cin >>opcaoDigitada;
+        }
+    }
+}
+
+void Controlador::visualizarOutroPerfil(Usuario *user){
+
+
+    std::string opcaoDigitada1;
+    while (opcaoDigitada1 != "6") {
+        std::system("clear");
+        std::cout << *user << std::endl;
+        std::cout << "O que deseja fazer??\n" 
+        << "[1] Explorar Tweets\n" 
+        << "[2] Seguir Usuario\n" 
+        << "[3] Deixar de Seguir\n" 
+        << "[4] Bloquear Usuario\n"
+        << "[5] Desbloquear Usuario\n"
+        << "[6] Sair do Perfil\n"
+        << std::endl;
+        std::cin >> opcaoDigitada1;
+
+        if (opcaoDigitada1 == "1") { 
+            //aplicando percorrerFeed no contexto de feed de um outro usuário.
+            if(user->getQntdTweets() > 0){
+                std::vector<Tweet> listaTweets = user->getListaTweets();
+                this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
+                user->setListaTweets(listaTweets);
+            } else{
+                std::string qualquerTecla;
+                std::cout <<"Este usuário ainda não escreveu nenhum Tweet. Aperte qualquer tecla para continuar" <<std::endl;
+                std::cin >> qualquerTecla;
+            }
+        }
+
+        else if (opcaoDigitada1 == "2") { 
+            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).seguirUsuario(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
+        }
+
+        else if (opcaoDigitada1 == "3") { 
+            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).deixarDeSeguir(*user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
+        }
+
+        else if (opcaoDigitada1 == "4") { 
+            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).bloquearUsuario(*user);
+        }
+
+        else if (opcaoDigitada1 == "5") { 
+            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).desbloquearUsuario(*user);
+        }
+        else if (opcaoDigitada1 == "6") { 
+            break;
+        }
+    }
+}
+
+void lerListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
+    std::fstream arquivoEmpregados;
+    std::map<std::string, Usuario> vetorUsuariosRecuperados = * new std::map<std::string, Usuario>;
+    arquivoEmpregados.open(USERS_FILE, std::ios::in | std::ios::binary);
+    if(arquivoEmpregados.is_open()){
+        arquivoEmpregados.read((char*)&vetorUsuariosRecuperados,sizeof(listaUsuarios));
+        for(auto i : vetorUsuariosRecuperados){
+            std::cout << i.second.getNomeUsuario() << std::endl;
+        }
+        std::cout << "programa feito com sucesso" << std::endl;
+        
+    }
+    arquivoEmpregados.close();
+}
+
+void salvarListaUsuarios(std::map<std::string,Usuario> listaUsuarios){
+    std::fstream arquivoUsuarios;
+    arquivoUsuarios.open(USERS_FILE, std::ios::out | std::ios::binary);
+    if(arquivoUsuarios.is_open()){
+        arquivoUsuarios.write((char*)&listaUsuarios,sizeof(listaUsuarios));
+        std::cout << "arquivo salvo com sucesso" << std::endl;
+        arquivoUsuarios.close();
+    }
+}
+
+
+
+
+
+    //Compara com o arquivo txt ou bin para ver se o login coincide
+    //Se sim, popularFeed(Usuario)
+    /*
+    bool encontrado = buscarUsuario(USERS_FILE);
+    if (encontrado) {
+        std::cout << "Fazendo login" << std::endl;
+        std::system(clear);
+        this->feedUsuarioLogado.popularFeed();
+    }
+    */
+    /*Se não chamar o fazer login novamente, e exibir mensagem de login ou senha incorretos
+    else {
+        std::cout << "Login ou senha incorretos" << std::endl;
+        return fazerLogin();
+    }
+}
+
+    */
+
+
 
 //função só pra gente testar outros metodos
 void Controlador::fazerTestes(){
@@ -265,128 +379,7 @@ void Controlador::fazerTestes(){
 
 }
 
-int main(){
-    Controlador controlador = * new Controlador();
-    controlador.iniciarPrograma();
-
-    //controlador.fazerTestes();
-    return 0;
-}
-
-void Controlador::iniciarSessao(){
-    std::string opcaoDigitada;
-    while(opcaoDigitada!="5"){
-        std::system("clear");
-        std::cout << "Seja bem vindo," << this->usuarioLogado.getNomeUsuario() << std::endl;
-        std::cout << "O que deseja fazer??" << std::endl;
-        std::cout << "[1] Escrever Tweet" << std::endl;
-        std::cout << "[2] Acessar Feed" << std::endl;
-        std::cout << "[3] Acessar o meu feed" << std::endl;
-        std::cout << "[4] Pesquisar Usuário" << std::endl;
-        std::cout << "[5] Encerrar Sessão" << std::endl;
-        std::cin >>opcaoDigitada;
-
-        if (opcaoDigitada == "1") {
-            std::system("clear");
-            char conteudoTweet[280] = {0};
-            std::string teste;
-            std::cout << "O que está pensando? " << std::endl;
-            std::cin.ignore();
-            std::cin.getline(conteudoTweet, 280);
-            Tweet novoTweet = *new Tweet(conteudoTweet, this->usuarioLogado.getNomeUsuario(), this->usuarioLogado.getNomePerfil(), this->usuarioLogado.getEmailUsuario());
-            this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).addTweet(novoTweet);
-            //this->usuarioLogado.addTweet(novoTweet);
-
-            std::vector<Tweet> listaComentarios = this->usuarioLogado.getListaTweets();
-            for(int i=0; i<listaComentarios.size(); i++){
-                std::cout << listaComentarios.at(i).printarTweet();
-            }
-
-            std::cout <<"Tweet adicionado com sucesso, aperte qualquer tecla para voltar" << std::endl;
-            std::cin >> teste;
-        } else if (opcaoDigitada == "2") {
-            std::system("clear");
-            //ainda não tá funcionando, vai ter que ser uma função especifica.
-            std::vector<Tweet> listaTweetsFeed = this->feedUsuarioLogado.popularFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), this->listaUsuariosGeral);
-            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), &listaTweetsFeed);
-            std::cout << "Pressione qualquer tecla para voltar" << std::endl;
-            std::cin >>opcaoDigitada;
-
-        } else if(opcaoDigitada == "3"){
-            std::system("clear");
-            //this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
-            
-            //aplicando percorrerFeed no contexto de feed de um outro usuário.
-            std::vector<Tweet> listaTweets = this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getListaTweets();
-            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
-            this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).setListaTweets(listaTweets);
-
-            std::cout << "Pressione qualquer tecla para voltar" << std::endl;
-            std::cin >>opcaoDigitada;
-        } else if(opcaoDigitada == "4"){
-            bool achouPerfil = false;
-            std::string userName;
-            std::cout << "Insira o nome do usuário que deseja pesquisar: " << std::endl;
-            std::cin >> userName;
-
-            for (auto user : this->listaUsuariosGeral) {
-                if (user.second.getNomeUsuario() == userName) {
-                    achouPerfil = true;
-                    this->visualizarOutroPerfil(&this->listaUsuariosGeral.at(user.second.getEmailUsuario()));
-                }
-            }
-            if(!achouPerfil){
-                std::cout << "Não foi encontrado nenhum usuário com esse nome" <<std::endl;
-            }
-            // std::cout << "Pressione qualquer tecla para voltar" << std::endl;
-            // std::cin >>opcaoDigitada;
-        }
-    }
-}
-
-void Controlador::visualizarOutroPerfil(Usuario *user){
 
 
-    std::string opcaoDigitada1;
-    while (opcaoDigitada1 != "6") {
-        std::system("clear");
-        std::cout << *user << std::endl;
-        std::cout << "O que deseja fazer??\n" 
-        << "[1] Explorar Tweets\n" 
-        << "[2] Seguir Usuario\n" 
-        << "[3] Deixar de Seguir\n" 
-        << "[4] Bloquear Usuario\n"
-        << "[5] Desbloquear Usuario\n"
-        << "[6] Sair do Perfil\n"
-        << std::endl;
-        std::cin >> opcaoDigitada1;
-
-        if (opcaoDigitada1 == "1") { 
-            //aplicando percorrerFeed no contexto de feed de um outro usuário.
-            std::vector<Tweet> listaTweets = user->getListaTweets();
-            this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
-            user->setListaTweets(listaTweets);
-        }
-
-        else if (opcaoDigitada1 == "2") { 
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).seguirUsuario(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
-        }
-
-        else if (opcaoDigitada1 == "3") { 
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).deixarDeSeguir(*user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
-        }
-
-        else if (opcaoDigitada1 == "4") { 
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).bloquearUsuario(*user);
-        }
-
-        else if (opcaoDigitada1 == "5") { 
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).desbloquearUsuario(*user);
-        }
-        else if (opcaoDigitada1 == "6") { 
-            break;
-        }
-    }
-}
 
 
