@@ -4,7 +4,10 @@
 #include <iostream>
 #include <vector>
 #include <map>
-
+/**
+ * @brief Arquivo cabeçalho de Tweet.cpp
+ * @headerfile Tweet.h
+*/
 //declarando que existe aqui para usar include somente no .cpp
 class Usuario;
 

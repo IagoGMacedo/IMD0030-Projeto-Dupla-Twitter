@@ -1,6 +1,11 @@
 #include "../include/Feed.h"
 #include <vector>
-
+#include <cstdlib>
+/**
+ * @file Feed.cpp
+ * @brief Objeto feed e seus parâmetros
+*/
+//Construtores e destrutor
 Feed::Feed(){
 }
 
@@ -8,6 +13,15 @@ Feed::~Feed(){
 
 }
 
+/**
+ * @brief Método para popular o feed de um usuário
+ * 
+ * @param user Usuario que vai ter o feed preenchido
+ * @param listaUsuariosGeral Lista dos usuários registrados
+ * @return A lista com tweets para o feed
+ * 
+ * @fn std::vector<Tweet> Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral)
+*/
 std::vector<Tweet> Feed::popularFeed(Usuario user, std::map<std::string, Usuario> listaUsuariosGeral){
     //acho que tá tudo ok por aqui
     //Exibir posts de usuarios que está seguindo
@@ -38,36 +52,50 @@ std::vector<Tweet> Feed::popularFeed(Usuario user, std::map<std::string, Usuario
     return listaTweetsFeed;
 }
 
-
+/**
+ * @brief Usado para percorrer um vetor de tweets
+ * 
+ * @param ownner Usuario "dono" do vetor
+ * @param vetorPercorrendo Ponteiro para o vetor que vai ser percorrido
+ * 
+ * @fn void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo)
+*/
 void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
     std::string opcaoDigitada;
     std::string stringConcatenar;
     int indiceTarget = 0;
+    /**< Loop para opções de ações em relação aos tweets*/
     while( opcaoDigitada!="s"){
         stringConcatenar = "";
+        /**< Passar para o próximo tweet*/
         if(opcaoDigitada=="d" && indiceTarget+1<vetorPercorrendo->size()){
             indiceTarget++;
         }
+        /**< Ir para tweet anterior*/
         if(opcaoDigitada=="a" && indiceTarget>0){
             indiceTarget--;
         }
+        /**< Curtir o tweet*/
         if(opcaoDigitada=="l"){
             vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
         }
+        /**< Comentar Tweet*/
         if(opcaoDigitada=="c"){
             std::system("clear");
             char conteudoTweet[280] = {0};
-            std::cout << "Digite sua resposta" << std::endl;
+            std::cout << "Digite sua resposta\n" << std::endl;
             std::cin.ignore();
             std::cin.getline(conteudoTweet, 280);
             Tweet novoTweet = * new Tweet(conteudoTweet, ownner.getNomeUsuario(), ownner.getNomePerfil(), ownner.getEmailUsuario());
             vetorPercorrendo->at(indiceTarget).comentarTweet(novoTweet);
         }
+        /**< Visualizar comentários*/
         if(opcaoDigitada=="v" && vetorPercorrendo->at(indiceTarget).getQntdComentarios() > 0){
             std::vector<Tweet> vectorListaComentarios = vetorPercorrendo->at(indiceTarget).getListaComentarios();
             this->percorrerFeed(ownner , &vectorListaComentarios);
             vetorPercorrendo->at(indiceTarget).setListaComentarios(vectorListaComentarios);
         }
+
         std::system("clear");
         for (int i = 0; i < vetorPercorrendo->size(); i++) {
             if(i==indiceTarget){
@@ -84,14 +112,20 @@ void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
         std::cin >> opcaoDigitada;
     }
 }
-
-
-
+/**
+ * @brief Percorre o feed geral do usuário
+ * 
+ * @param listaUsuariosgeral Ponteiro para lista de usuarios registrados
+ * @param ownner Usuario operante
+ * 
+ * @fn void Feed::percorrerFeedGeral(Usuario ownner, std::map<std::string, Usuario> *listaUsuariosGeral)
+*/
 void Feed::percorrerFeedGeral(Usuario ownner, std::map<std::string, Usuario> *listaUsuariosGeral){
     std::string opcaoDigitada;
     std::string stringConcatenar;
     int indiceTarget = this->popularFeed(ownner, *listaUsuariosGeral).size() - 1;
     std::vector<Tweet> vetorPercorrendo;
+    /**< Loop para ações do usuário sob os tweets*/
     while( opcaoDigitada!="s"){
         stringConcatenar = "";
         vetorPercorrendo = this->popularFeed(ownner, *listaUsuariosGeral);
@@ -106,7 +140,7 @@ void Feed::percorrerFeedGeral(Usuario ownner, std::map<std::string, Usuario> *li
             if(vetorPercorrendo.at(indiceTarget).getQntdComentarios() > 0){
                 stringConcatenar = "[v] ver comentários ";
             }
-            std::cout <<"[a] Anterior [d] Próximo [l] Curtir Tweet [c] Comentar Tweet "<<stringConcatenar<<"[s] sair do feed ";
+            std::cout <<"[a] Anterior [d] Próximo [l] Curtir Tweet [c] Comentar Tweet "<<stringConcatenar<<"[s] sair do feed " << std::endl;
             std::cin >> opcaoDigitada;
 
             if(opcaoDigitada=="d" && indiceTarget>0){

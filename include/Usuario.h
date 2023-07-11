@@ -1,12 +1,14 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-//#include "../include/std::vector.h"
 #include "../include/Tweet.h"
 #include <iostream>
 #include <vector>
 #include <map>
-
+/**
+ * @brief Arquivo cabeçalho de Usuario.cpp
+ * @headerfile Usuario.h
+*/
 class Usuario {
 private:
     std::string nomePerfil;
@@ -17,7 +19,6 @@ private:
     std::vector<Tweet> listaTweets;
     std::map<std::string, Usuario> listaSeguindo;
     std::map<std::string, Usuario> listaSeguidores;
-    std::map<std::string, Usuario> listaBloqueados;
     
 public:
     //Construtores e destrutor
@@ -34,7 +35,6 @@ public:
     int getQntdSeguindo();
     std::map<std::string, Usuario> getListaSeguindo();
     std::map<std::string, Usuario> getListaSeguidores();
-    std::map<std::string, Usuario> getListaBloqueados();
     std::string getEmailUsuario();
     std::string getNomeUsuario();
     int getQntdTweets();
@@ -44,19 +44,15 @@ public:
     void setListaTweets(std::vector<Tweet> listaTweets);
     void setListaSeguindo(std::map<std::string, Usuario> listaSeguindo);
     void setListaSeguidores(std::map<std::string, Usuario> listaSeguidos);
-    void setListaBloqueados(std::map<std::string, Usuario> listaBloqueados);
     void setEmailUsuario(std::string emailUsuario);
     void setNomeUsuario(std::string nomeUsuario);
     bool updtListaSeguidores(Usuario, std::string);
     bool updtListaSeguindo(Usuario, std::string);
-    bool updtListaBloqueados(Usuario, std::string);
 
     //Outros Metodos
     bool deletarUsuario(std::string confirmacao);
     bool seguirUsuario(Usuario *user, Usuario ownner);
-    bool deixarDeSeguir(Usuario user, Usuario ownner);
-    bool bloquearUsuario(Usuario user);
-    bool desbloquearUsuario(Usuario user);
+    bool deixarDeSeguir(Usuario *user, Usuario ownner);
     void addTweet(Tweet novoTweet);
     bool conferirSenha(std::string senhaDigitada);
     

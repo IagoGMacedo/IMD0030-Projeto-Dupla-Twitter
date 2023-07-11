@@ -1,6 +1,7 @@
+#Makefile
 # Variáveis
 CC := g++
-CFLAGS := -Wall -Wextra -std=c++11
+#CFLAGS := -Wall -Wextra -std=c++11 -ansi -pedantic
 SRC_DIR := src
 INCLUDE_DIR := include
 BIN_DIR := bin
@@ -32,12 +33,11 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(TARGET): $(addprefix $(BIN_DIR)/, $(OBJECTS))
 	$(CC) $(CFLAGS) $^ -o $@
 
+run:
+	./$(BIN_DIR)/programa
+
 # Limpar arquivos objeto e binário
 clean:
 	rm -f $(BIN_DIR)/*.o $(TARGET)
 
-# Teste seletivo $(SRC_DIR)/Tweet.cpp
-select: 
-	$(CC) $(CFLAGS) $(SRC_DIR)/Controlador.cpp $(SRC_DIR)/Usuario.cpp $(SRC_DIR)/Feed.cpp -o $(BIN_DIR)/programa
-
-.PHONY: all clean select
+.PHONY: all clean

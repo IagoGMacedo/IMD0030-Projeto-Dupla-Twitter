@@ -4,6 +4,10 @@
 #include "../include/Usuario.h"
 #include <vector>
 
+/**
+ * @brief Arquivo cabeçalho de Feed.cpp
+ * @headerfile Feed.h
+*/
 
 class Feed {
     public:

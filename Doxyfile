@@ -4,10 +4,10 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "TAD Dicionário - Implementação com base em arrays"
+PROJECT_NAME           = "Simulador de Twitter"
 PROJECT_NUMBER         =
-PROJECT_BRIEF          =
-PROJECT_LOGO           =
+PROJECT_BRIEF          = "Um projeto que simula as funcionalidades do twitter trabalhando com orientação a objeto"
+PROJECT_LOGO           = "twitter-logo-2-1.png"
 OUTPUT_DIRECTORY       = ./doc
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO

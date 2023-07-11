@@ -4,7 +4,10 @@
 #include "../include/Usuario.h"
 #include "../include/Feed.h"
 #include <map>
-
+/**
+ * @brief Arquivo cabeçalho de Controlador.cpp
+ * @headerfile Controlador.h
+*/
 
 class Controlador{
     private:
