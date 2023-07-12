@@ -11,7 +11,7 @@
 
 class Controlador{
     private:
-        Usuario usuarioLogado;
+        Usuario *usuarioLogado;
         Feed feedUsuarioLogado;
         std::map<std::string, Usuario> listaUsuariosGeral;
     public:

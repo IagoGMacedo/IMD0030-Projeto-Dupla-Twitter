@@ -8,9 +8,6 @@
  * @brief Arquivo cabeçalho de Tweet.cpp
  * @headerfile Tweet.h
 */
-//declarando que existe aqui para usar include somente no .cpp
-class Usuario;
-
 class Tweet{
     private:
 
@@ -43,7 +40,6 @@ class Tweet{
         int getQntdCurtidas();
         int getQntdReTweets();
         std::string getNomeUsuarioAutor();
-        //std:: getListaCurtidas(std::map<std::string, Usuario> listaCurtidas);
         std::string getNomePerfilAutor();
         std::string getEmailAutor();
         std::vector<Tweet> getListaComentarios();
@@ -54,7 +50,6 @@ class Tweet{
         //Setters
         void setConteudoTweet(std::string conteudoTweet);
         void setQntdCurtidas(int qntdCurtidas);
-        void setListaCurtidas(std::map<std::string, Usuario> listaCurtidas);
         void setListaComentarios(std::vector<Tweet>);
         void setQntdComentarios(int qntdComentarios);
         

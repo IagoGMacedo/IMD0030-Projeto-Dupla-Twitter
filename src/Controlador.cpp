@@ -16,7 +16,7 @@
 /**< Construtor e Destrutor*/
 Controlador::Controlador() {
     this->listaUsuariosGeral = * new std::map<std::string, Usuario>();
-    this->usuarioLogado = * new Usuario();
+    this->usuarioLogado;
     this->feedUsuarioLogado = * new Feed();
 }
 
@@ -101,7 +101,7 @@ void Controlador::fazerLogin(){
             //login deu certo 
             /**< Se o login estiver correto, chama o método iniciarSessao()*/
             std::cout << "login realizado com sucesso !" << std::endl;
-            this->usuarioLogado = this->listaUsuariosGeral.at(emailDigitado);
+            this->usuarioLogado = &this->listaUsuariosGeral.at(emailDigitado);
             this->iniciarSessao();
         } else{
             std::cout << "Senha inválida" << std::endl;
@@ -170,8 +170,8 @@ void Controlador::iniciarSessao(){
     /**< Loop para as novas opções de ações, escrever um tweet, acessar o feed, pesquisar por usuarios ou encerrar a sessão*/
     while(opcaoDigitada != "5"){
         std::system("clear");
-        std::cout << this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()) << std::endl;
-        std::cout << "\nSeja bem vindo," << this->usuarioLogado.getNomeUsuario() << std::endl;
+        std::cout << *this->usuarioLogado << std::endl;
+        std::cout << "\nSeja bem vindo," << this->usuarioLogado->getNomeUsuario() << std::endl;
         std::cout << "O que deseja fazer??" << std::endl;
         std::cout << "[1] Escrever Tweet" << std::endl;
         std::cout << "[2] Acessar Feed" << std::endl;
@@ -190,14 +190,9 @@ void Controlador::iniciarSessao(){
             std::cin.ignore();
             std::cin.getline(conteudoTweet, 280);
 
-            Tweet novoTweet = *new Tweet(conteudoTweet, this->usuarioLogado.getNomeUsuario(), this->usuarioLogado.getNomePerfil(), this->usuarioLogado.getEmailUsuario());
-            this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).addTweet(novoTweet);
-            //this->usuarioLogado.addTweet(novoTweet);
+            Tweet novoTweet = *new Tweet(conteudoTweet, this->usuarioLogado->getNomeUsuario(), this->usuarioLogado->getNomePerfil(), this->usuarioLogado->getEmailUsuario());
+            this->usuarioLogado->addTweet(novoTweet);
 
-            //std::vector<Tweet> listaComentarios = this->usuarioLogado.getListaTweets();
-            //for(int i=0; i<listaComentarios.size(); i++){
-            //    std::cout << listaComentarios.at(i);
-            //}
 
             std::cout <<"Tweet adicionado com sucesso, aperte qualquer tecla para voltar" << std::endl;
             std::cin >> teste;
@@ -205,8 +200,7 @@ void Controlador::iniciarSessao(){
         /**< Acesso ao feed, chama o metodo percorrerFeedGeral, do feedUsuarioLogado*/
         } else if (opcaoDigitada == "2") {
             std::system("clear");
-            this->feedUsuarioLogado.percorrerFeedGeral(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()), &this->listaUsuariosGeral);
-            //tentando primeiro só com o ponteiro!
+            this->feedUsuarioLogado.percorrerFeedGeral(*this->usuarioLogado, &this->listaUsuariosGeral);
 
         /**< Acessar meus tweets, Percorrendo lista de tweets do usuário logado, caso não haja tweets, exibição de uma mensagem sobre isso*/
         } else if(opcaoDigitada == "3"){
@@ -214,19 +208,16 @@ void Controlador::iniciarSessao(){
             //this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
             
             //aplicando percorrerFeed no contexto de feed de um outro usuário.
-            if(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getQntdTweets()>0){
-                std::vector<Tweet> listaTweets = this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).getListaTweets();
-                this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
-                this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()).setListaTweets(listaTweets);
+            if(this->usuarioLogado->getQntdTweets()>0){
+                std::vector<Tweet> listaTweets = this->usuarioLogado->getListaTweets();
+                this->feedUsuarioLogado.percorrerFeed(*this->usuarioLogado, &listaTweets);
+                this->usuarioLogado->setListaTweets(listaTweets);
             
             } else{
                 std::string qualquerTecla;
                 std::cout << "Você ainda não escreveu nenhum Tweet. Aperte qualquer tecla para voltar" <<std::endl;
                 std::cin >> qualquerTecla;
             }
-            //this->feedUsuarioLogado.percorrerFeedGeral(&this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()),&this->listaUsuariosGeral);
-            // std::cout << "Pressione qualquer tecla para voltar" << std::endl;
-            // std::cin >>opcaoDigitada;
 
         /**< Pesquisando nome de usuário, é feita uma busca pela listaUsuariosGeral, de acordo com o nome inserido pelo usuário atual*/
         } else if(opcaoDigitada == "4"){
@@ -248,8 +239,6 @@ void Controlador::iniciarSessao(){
                 std::cout << "Pressione qualquer tecla para voltar" << std::endl;
                 std::cin >>opcaoDigitada;
             }
-            // std::cout << "Pressione qualquer tecla para voltar" << std::endl;
-            // std::cin >>opcaoDigitada;
         }
     }
 }
@@ -261,10 +250,16 @@ void Controlador::iniciarSessao(){
 */
 void Controlador::visualizarOutroPerfil(Usuario *user){
     /**< Menu de opções exibido ao visualizar um perfil, Explorar os tweets, seguir ou deixar de seguir Usuario, sair do perfil*/
+    std::string seguir;
     std::string opcaoDigitada1;
-    std::string seguir = "[2] Seguir Usuario\n" ;
     while (opcaoDigitada1 != "4") {
         std::system("clear");
+        if(this->usuarioLogado->estaSeguindoUsuario(user->getEmailUsuario())){
+            seguir = "[2] Deixar de seguir Usuario\n" ;
+        } else{
+            seguir = "[2] Seguir Usuario\n" ;
+        }
+
         std::cout << *user << std::endl;
         std::cout << "O que deseja fazer??\n" 
         << "[1] Explorar Tweets\n" 
@@ -278,7 +273,7 @@ void Controlador::visualizarOutroPerfil(Usuario *user){
             //aplicando percorrerFeed no contexto de feed de um outro usuário.
             if(user->getQntdTweets() > 0){
                 std::vector<Tweet> listaTweets = user->getListaTweets();
-                this->feedUsuarioLogado.percorrerFeed(this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()), &listaTweets);
+                this->feedUsuarioLogado.percorrerFeed(*this->usuarioLogado, &listaTweets);
                 user->setListaTweets(listaTweets);
             } else{
                 std::string qualquerTecla;
@@ -287,15 +282,17 @@ void Controlador::visualizarOutroPerfil(Usuario *user){
             }
         }
         /**< Seguir ou deixar de seguir usuário*/
-        else if (opcaoDigitada1 == "2" && usuarioLogado.getListaSeguindo().find(user->getEmailUsuario()) != usuarioLogado.getListaSeguindo().end()) { 
-            seguir = "[2] Deixar de seguir Usuario\n" ;
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).seguirUsuario(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
+        else if (opcaoDigitada1 == "2" ) { 
+            if(!this->usuarioLogado->estaSeguindoUsuario(user->getEmailUsuario())){
+                seguir = "[2] Deixar de seguir Usuario\n" ;
+                this->usuarioLogado->seguirUsuario(user, *this->usuarioLogado);
+            } else{
+                seguir = "[2] Seguir Usuario\n" ;
+                this->usuarioLogado->deixarDeSeguir(user, *this->usuarioLogado);
+            }
+
         }
         
-        else if (opcaoDigitada1 == "2" && usuarioLogado.getListaSeguindo().find(user->getEmailUsuario()) != usuarioLogado.getListaSeguindo().end()) { 
-            seguir = "[2] Seguir Usuario\n" ;
-            this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()).deixarDeSeguir(user, this->listaUsuariosGeral.at(usuarioLogado.getEmailUsuario()));
-        }
         /**< Encerrar loop*/
         else if (opcaoDigitada1 == "3") { 
             break;
@@ -317,6 +314,18 @@ void Controlador::fazerTestes(){
     this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioIago.getEmailUsuario(), usuarioIago));
     this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGilberto.getEmailUsuario(), usuarioGilberto));
 
+    //seguindo outro usuario 
+    std::cout << usuarioIago << std::endl;
+    bool seguir1 = usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
+    bool seguir2 = usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
+    std::cout << usuarioIago << std::endl;
+    std::cout << usuarioGilberto << std::endl;
+
+
+    std::cout << "deixar de seguir: " << usuarioIago.deixarDeSeguir(&usuarioGilberto, usuarioIago) << std::endl;
+    std::cout << usuarioIago << std::endl;
+    std::cout << usuarioGilberto << std::endl;
+    std::cout << "---------------------------------------";
     //criando tweets
     Tweet tweetIago = * new Tweet("chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
     Tweet tweetGilberto = * new Tweet("ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
@@ -336,9 +345,6 @@ void Controlador::fazerTestes(){
     usuarioGilberto.addTweet(tweetGilberto);
     usuarioGilberto.addTweet(tweetRespostaGilberto);
 
-    //seguindo outro usuario 
-    bool seguir1 = usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
-    bool seguir2 = usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
 
     std::cout << "DEBUG:\n" << seguir1 << "\n" << usuarioGilberto << std::endl << std::endl;
     std::cout << "DEBUG:\n" << seguir2 << "\n" << usuarioIago << std::endl << std::endl;

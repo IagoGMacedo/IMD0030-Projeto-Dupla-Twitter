@@ -88,9 +88,6 @@ void Tweet::setQntdCurtidas(int qntdCurtidas) {
 void Tweet::setQntdComentarios(int qntdComentarios) {
     this->qntdComentarios = qntdComentarios;
 }
-// void Tweet::setListaCurtidas(std::map<std::string, Usuario> listaCurtidas){
-//     this->listaCurtidas = listaCurtidas;
-// }
 void Tweet::setListaComentarios(std::vector<Tweet> listaComentarios) {
     this->listaComentarios = listaComentarios;
 }
@@ -147,14 +144,5 @@ bool Tweet::usuarioJacurtiu(std::string emailUsuario){
     }
 }
 
-//bool Tweet::reTweet(std::string emailUsuario) {
-//    auto jaReTweetou = std::find(this->listaReTweets.begin(), this->listaReTweets.end(), emailUsuario);
-//    if (jaReTweetou != this->listaReTweets.end()) {
-//        return false;
-//    } else{
-//        this->listaReTweets.insert(this->listaReTweets.begin(), emailUsuario);
-//    }
-//    return true;
-//}
 
 

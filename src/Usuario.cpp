@@ -152,8 +152,10 @@ bool Usuario::deletarUsuario(std::string confirmacao) {
 // ownner = eu
 bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
     if (this->listaSeguindo.find(user->getEmailUsuario()) != this->listaSeguindo.end()) {
+        //achou
         return false;
     }
+    //naoachou
     this->updtListaSeguindo(*user, "+");
     user->updtListaSeguidores(ownner, "+");
     return true;
@@ -168,11 +170,11 @@ bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
 */
 bool Usuario::deixarDeSeguir(Usuario *user, Usuario ownner) {
     if (this->listaSeguindo.find(user->getEmailUsuario()) != this->listaSeguindo.end()) {
-        return false;
+        this->updtListaSeguindo(*user, "-");
+        user->updtListaSeguidores(ownner, "-");
+        return true;
     }
-    this->updtListaSeguindo(*user, "-");
-    user->updtListaSeguidores(ownner, "-");
-    return true;
+    return false;
 }
 /**
  * @brief Vincular um tweet ao usuário
@@ -195,3 +197,12 @@ bool Usuario::conferirSenha(std::string senhaDigitada){
     }
     return false;
 }
+
+bool Usuario::estaSeguindoUsuario(std::string emailUsuario){
+    if (this->listaSeguindo.find(emailUsuario) != this->listaSeguindo.end()) {
+        return true;
+    }
+    return false;
+
+}
+

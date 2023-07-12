@@ -55,6 +55,7 @@ public:
     bool deixarDeSeguir(Usuario *user, Usuario ownner);
     void addTweet(Tweet novoTweet);
     bool conferirSenha(std::string senhaDigitada);
+    bool estaSeguindoUsuario(std::string emailUsuario);
     
 };
 
