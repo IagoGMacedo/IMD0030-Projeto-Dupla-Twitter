@@ -63,6 +63,7 @@ std::vector<Tweet> Feed::popularFeed(Usuario user, std::map<std::string, Usuario
 void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
     std::string opcaoDigitada;
     std::string stringConcatenar;
+    std::string stringCurtir;
     int indiceTarget = 0;
     /**< Loop para opções de ações em relação aos tweets*/
     while( opcaoDigitada!="s"){
@@ -77,7 +78,11 @@ void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
         }
         /**< Curtir o tweet*/
         if(opcaoDigitada=="l"){
-            vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
+            if(vetorPercorrendo->at(indiceTarget).usuarioJacurtiu(ownner.getEmailUsuario())){
+                vetorPercorrendo->at(indiceTarget).descurtirTweet(ownner.getEmailUsuario());
+            } else{
+                vetorPercorrendo->at(indiceTarget).curtirTweet(ownner.getEmailUsuario());
+            }
         }
         /**< Comentar Tweet*/
         if(opcaoDigitada=="c"){
@@ -106,9 +111,14 @@ void Feed::percorrerFeed(Usuario ownner, std::vector<Tweet> *vetorPercorrendo){
         if(vetorPercorrendo->at(indiceTarget).getQntdComentarios() > 0){
             stringConcatenar = "[v] ver comentários ";
         }
+        if(vetorPercorrendo->at(indiceTarget).usuarioJacurtiu(ownner.getEmailUsuario())){
+            stringCurtir = "[l] descurtir Tweet";
+        } else{
+            stringCurtir = "[l] Curtir Tweet";
+        }
         //if(vetorPercorrendo->at(indiceTarget).cur)
         //std::cout <<"[w] Anterior [s] Próximo [j] Curtir Tweet [k] Comentar Tweet "<<stringConcatenar<< std::endl;
-        std::cout <<"[a] Anterior [d] Próximo [l] Curtir Tweet [c] Comentar Tweet "<<stringConcatenar<<"[s] sair do feed ";
+        std::cout <<"[a] Anterior [d] Próximo "<<stringCurtir<<" [c] Comentar Tweet "<<stringConcatenar<<"[s] sair do feed ";
         std::cin >> opcaoDigitada;
     }
 }

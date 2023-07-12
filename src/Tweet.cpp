@@ -61,6 +61,9 @@ int Tweet::getQntdComentarios() {
 std::vector<Tweet> Tweet::getListaComentarios(){
     return this->listaComentarios;
 }
+std::vector<std::string> Tweet::getListaCurtida(){
+    return this->listaCurtidas;
+}
 int Tweet::getQntdReTweets() {
     return this->listaReTweets.size();
 }
@@ -130,6 +133,20 @@ void Tweet::comentarTweet(Tweet comentario) {
     this->listaComentarios.insert(this->listaComentarios.begin(), comentario) ;
     this->qntdComentarios++;
 }
+/**
+ * @brief Verifica se um determinado usuário já curtiu um tweet
+ * @param emailUsuario Email do usuário a ser verificado
+ * @fn bool Tweet::usuarioJacurtiu(std::string emailUsuario)
+*/
+bool Tweet::usuarioJacurtiu(std::string emailUsuario){
+    auto jaCurtiu = std::find(this->listaCurtidas.begin(), this->listaCurtidas.end(), emailUsuario);
+    if (jaCurtiu != this->listaCurtidas.end()) {
+        return true;
+    } else{
+        return false;
+    }
+}
+
 //bool Tweet::reTweet(std::string emailUsuario) {
 //    auto jaReTweetou = std::find(this->listaReTweets.begin(), this->listaReTweets.end(), emailUsuario);
 //    if (jaReTweetou != this->listaReTweets.end()) {
