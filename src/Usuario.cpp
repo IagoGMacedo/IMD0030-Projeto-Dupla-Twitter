@@ -155,7 +155,7 @@ bool Usuario::seguirUsuario(Usuario *user, Usuario ownner) {
         //achou
         return false;
     }
-    //naoachou
+    //nao achou
     this->updtListaSeguindo(*user, "+");
     user->updtListaSeguidores(ownner, "+");
     return true;

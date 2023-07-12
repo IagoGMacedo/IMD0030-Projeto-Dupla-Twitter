@@ -29,9 +29,10 @@ Controlador::~Controlador() {
  */
 int main(){
     Controlador controlador = * new Controlador();
+    controlador.fazerTestes();
     controlador.iniciarPrograma();
 
-    //controlador.fazerTestes();
+    
     return 0;
 }
 
@@ -42,14 +43,7 @@ int main(){
 void Controlador::iniciarPrograma(){
     std::string stringEntrada;
     std::system("clear");
-    Usuario usuarioIago = * new Usuario("iagola", "iago", "iagognobre@gmail.com", "87020586");
-    Usuario usuarioGilberto = * new Usuario("gilbertin","gilberto","gilberto@gmail.com", "87020586");
-    Usuario usuarioGabriel= * new Usuario("gabrielzin","gabriel","gabriel@gmail.com", "87020586");
 
-    //botando isso aqui pra facilitar testes, tirar depois
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioIago.getEmailUsuario(),usuarioIago));
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGilberto.getEmailUsuario(), usuarioGilberto));
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGabriel.getEmailUsuario(), usuarioGabriel));
     /**< Loop inicial, com opções para chamada de métodos: fazerLogin(), registrar() ou encerrar o loop, e consequentemente o programa*/
     bool encerrarPrograma = false;
     while(!encerrarPrograma){
@@ -154,9 +148,6 @@ void Controlador::registrar(){
                 std::cout << "Usuário "<<novoUsuario.getNomeUsuario() <<" criado com sucesso" << std::endl;
         }
     }
-    //salvarListaUsuarios(this->listaUsuariosGeral);
-    // lerListaUsuarios(this->listaUsuariosGeral);
-    /**< Retorno ao loop principal, ou main menu*/
     std::cout << "aperte qualquer tecla para voltar ao menu inicial" << std::endl;
     std::cin >> emailDigitado;
 }
@@ -205,7 +196,6 @@ void Controlador::iniciarSessao(){
         /**< Acessar meus tweets, Percorrendo lista de tweets do usuário logado, caso não haja tweets, exibição de uma mensagem sobre isso*/
         } else if(opcaoDigitada == "3"){
             std::system("clear");
-            //this->feedUsuarioLogado.popularProprioFeed(this->listaUsuariosGeral.at(this->usuarioLogado.getEmailUsuario()));
             
             //aplicando percorrerFeed no contexto de feed de um outro usuário.
             if(this->usuarioLogado->getQntdTweets()>0){
@@ -306,48 +296,43 @@ void Controlador::visualizarOutroPerfil(Usuario *user){
 */
 //função só pra gente testar outros metodos
 void Controlador::fazerTestes(){
-
+    //Instanciando usuários
     Usuario usuarioIago = * new Usuario("iagola", "iago", "iagognobre@gmail.com", "87020586");
     Usuario usuarioGilberto = * new Usuario("gilbertin","gilberto","gilberto@gmail.com", "87020586");
-
-    //colocando no map
+    Usuario usuarioGabriel= * new Usuario("gabrielzin","gabriel","gabriel@gmail.com", "87020586");
+    
+    //Inserindo usuários na lista geral
     this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioIago.getEmailUsuario(), usuarioIago));
     this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGilberto.getEmailUsuario(), usuarioGilberto));
+    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGabriel.getEmailUsuario(), usuarioGabriel));
+    
+    //Seguindo
+    usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
+    usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
+    usuarioGabriel.seguirUsuario(&usuarioIago, usuarioGabriel);
 
-    //seguindo outro usuario 
-    std::cout << usuarioIago << std::endl;
-    bool seguir1 = usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
-    bool seguir2 = usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
-    std::cout << usuarioIago << std::endl;
-    std::cout << usuarioGilberto << std::endl;
-
-
-    std::cout << "deixar de seguir: " << usuarioIago.deixarDeSeguir(&usuarioGilberto, usuarioIago) << std::endl;
-    std::cout << usuarioIago << std::endl;
-    std::cout << usuarioGilberto << std::endl;
-    std::cout << "---------------------------------------";
-    //criando tweets
-    Tweet tweetIago = * new Tweet("chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
-    Tweet tweetGilberto = * new Tweet("ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
-
-    Tweet tweetRespostaGilberto = * new Tweet("pois eu vou fazer uma prece",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
-
-    tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
-    tweetGilberto.curtirTweet(usuarioIago.getEmailUsuario());
-
-    std::cout << tweetGilberto << std::endl;
-
-    //tentando incluir comentarios em um determinado tweet
-    tweetIago.comentarTweet(tweetRespostaGilberto);
-
-    //adicionando tweets
-    usuarioIago.addTweet(tweetIago);
+    //Criando tweets e respostas
+    Tweet tweet1Iago = * new Tweet("Chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
+    Tweet tweet2Iago = * new Tweet("É o minino de papai é?", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
+    Tweet tweetGilberto = * new Tweet("Rapaz, ele tá sem zap",  usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+    Tweet tweetRespostaGilberto = * new Tweet("Pois eu vou fazer uma prece", usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
+    Tweet tweetRespostaGabriel = * new Tweet("Pra Deus, nosso senhor", usuarioGabriel.getNomeUsuario(), usuarioGabriel.getNomePerfil(), usuarioGabriel.getEmailUsuario());
+    
+    //Adicionando tweets
+    usuarioIago.addTweet(tweet1Iago);
+    usuarioIago.addTweet(tweet2Iago);
     usuarioGilberto.addTweet(tweetGilberto);
     usuarioGilberto.addTweet(tweetRespostaGilberto);
+    usuarioGabriel.addTweet(tweetRespostaGabriel);
 
+    //Respondendo tweets
+    tweet1Iago.comentarTweet(tweetRespostaGilberto);
+    tweet1Iago.comentarTweet(tweetRespostaGabriel);
 
-    std::cout << "DEBUG:\n" << seguir1 << "\n" << usuarioGilberto << std::endl << std::endl;
-    std::cout << "DEBUG:\n" << seguir2 << "\n" << usuarioIago << std::endl << std::endl;
+    //Curtindo tweets
+    tweet1Iago.curtirTweet(usuarioGilberto.getEmailUsuario());
+    tweet1Iago.curtirTweet(usuarioGabriel.getEmailUsuario());
+    tweet1Iago.curtirTweet(usuarioIago.getEmailUsuario());
 }
 
 
