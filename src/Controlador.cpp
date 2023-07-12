@@ -300,16 +300,6 @@ void Controlador::fazerTestes(){
     Usuario usuarioIago = * new Usuario("iagola", "iago", "iagognobre@gmail.com", "87020586");
     Usuario usuarioGilberto = * new Usuario("gilbertin","gilberto","gilberto@gmail.com", "87020586");
     Usuario usuarioGabriel= * new Usuario("gabrielzin","gabriel","gabriel@gmail.com", "87020586");
-    
-    //Inserindo usuários na lista geral
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioIago.getEmailUsuario(), usuarioIago));
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGilberto.getEmailUsuario(), usuarioGilberto));
-    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGabriel.getEmailUsuario(), usuarioGabriel));
-    
-    //Seguindo
-    usuarioIago.seguirUsuario(&usuarioGilberto, usuarioIago);
-    usuarioGilberto.seguirUsuario(&usuarioIago, usuarioGilberto);
-    usuarioGabriel.seguirUsuario(&usuarioIago, usuarioGabriel);
 
     //Criando tweets e respostas
     Tweet tweet1Iago = * new Tweet("Chove chuva chove sem parar", usuarioIago.getNomeUsuario(), usuarioIago.getNomePerfil(), usuarioIago.getEmailUsuario());
@@ -318,12 +308,6 @@ void Controlador::fazerTestes(){
     Tweet tweetRespostaGilberto = * new Tweet("Pois eu vou fazer uma prece", usuarioGilberto.getNomeUsuario(), usuarioGilberto.getNomePerfil(), usuarioGilberto.getEmailUsuario());
     Tweet tweetRespostaGabriel = * new Tweet("Pra Deus, nosso senhor", usuarioGabriel.getNomeUsuario(), usuarioGabriel.getNomePerfil(), usuarioGabriel.getEmailUsuario());
     
-    //Adicionando tweets
-    usuarioIago.addTweet(tweet1Iago);
-    usuarioIago.addTweet(tweet2Iago);
-    usuarioGilberto.addTweet(tweetGilberto);
-    usuarioGilberto.addTweet(tweetRespostaGilberto);
-    usuarioGabriel.addTweet(tweetRespostaGabriel);
 
     //Respondendo tweets
     tweet1Iago.comentarTweet(tweetRespostaGilberto);
@@ -333,7 +317,28 @@ void Controlador::fazerTestes(){
     tweet1Iago.curtirTweet(usuarioGilberto.getEmailUsuario());
     tweet1Iago.curtirTweet(usuarioGabriel.getEmailUsuario());
     tweet1Iago.curtirTweet(usuarioIago.getEmailUsuario());
+
+
+    //Inserindo usuários na lista geral
+    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioIago.getEmailUsuario(), usuarioIago));
+    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGilberto.getEmailUsuario(), usuarioGilberto));
+    this->listaUsuariosGeral.insert(std::pair<std::string, Usuario>(usuarioGabriel.getEmailUsuario(), usuarioGabriel));
+
+    //Adicionando tweets
+    this->listaUsuariosGeral.at(usuarioIago.getEmailUsuario()).addTweet(tweet1Iago);
+    this->listaUsuariosGeral.at(usuarioIago.getEmailUsuario()).addTweet(tweet2Iago);
+    this->listaUsuariosGeral.at(usuarioGilberto.getEmailUsuario()).addTweet(tweetGilberto);
+    this->listaUsuariosGeral.at(usuarioGilberto.getEmailUsuario()).addTweet(tweetRespostaGilberto);
+    this->listaUsuariosGeral.at(usuarioGabriel.getEmailUsuario()).addTweet(tweetRespostaGabriel);
+
+    //Seguindo
+    this->listaUsuariosGeral.at(usuarioGilberto.getEmailUsuario()).seguirUsuario(&this->listaUsuariosGeral.at(usuarioIago.getEmailUsuario()), this->listaUsuariosGeral.at(usuarioGilberto.getEmailUsuario()));
+    this->listaUsuariosGeral.at(usuarioGabriel.getEmailUsuario()).seguirUsuario(&this->listaUsuariosGeral.at(usuarioIago.getEmailUsuario()), this->listaUsuariosGeral.at(usuarioGabriel.getEmailUsuario()));
+    this->listaUsuariosGeral.at(usuarioGabriel.getEmailUsuario()).seguirUsuario(&this->listaUsuariosGeral.at(usuarioGilberto.getEmailUsuario()), this->listaUsuariosGeral.at(usuarioGabriel.getEmailUsuario()));
+
+
 }
+
 
 
 
