@@ -117,16 +117,16 @@ void Controlador::registrar(){
     std::system("clear");
     std::string nomeUsuarioDigitado, nomePerfilDigitado, senhaDigitada, emailDigitado;
     /**< Recebe como entrada os dados do usuário, nome de usuário, nome de perfil, senha e email*/
-    std::cout << "Digite o nome do seu usuário:" << std::endl;
+    std::cout << "Digite o nome do seu usuário(apelido): " << std::endl;
     std::cin >> nomeUsuarioDigitado;
 
-    std::cout << "Digite o nome do seu perfil (apelido):" << std::endl;
+    std::cout << "Digite o nome do seu perfil: " << std::endl;
     std::cin >> nomePerfilDigitado;
 
-    std::cout << "Digite a sua senha:" << std::endl;
+    std::cout << "Digite a sua senha: " << std::endl;
     std::cin >> senhaDigitada;
 
-    std::cout << "Digite o seu email:" << std::endl;
+    std::cout << "Digite o seu email: " << std::endl;
     std::cin >> emailDigitado;
 
     /**< Verificações para a validez do nome de usuário, e email, para não haver repetições*/
